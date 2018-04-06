@@ -1,0 +1,63 @@
+buildscript {
+    ext {
+        kotlinVersion = '1.2.21'
+        junitPlatformVersion = '1.0.1'
+    }
+
+    repositories {
+        jcenter()
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "org.junit.platform:junit-platform-gradle-plugin:$junitPlatformVersion"
+    }
+}
+
+apply plugin: 'kotlin'
+apply plugin: 'org.junit.platform.gradle.plugin'
+apply plugin: 'idea'
+
+sourceCompatibility = '1.7'
+
+sourceSets.main.java.srcDirs = ["src/"]
+sourceSets.main.kotlin.srcDirs = ["src/"]
+sourceSets.test.java.srcDirs = ["test/"]
+sourceSets.test.kotlin.srcDirs = ["test/"]
+
+junitPlatform {
+    filters {
+        engines {
+            include 'spek'
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    gdxVersion = '1.9.6'
+    ktxVersion = '1.9.6-b4'
+    spekVersion = '1.1.5'
+}
+
+dependencies {
+    compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlinVersion"
+
+    testCompile "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
+    testCompile 'com.natpryce:hamkrest:1.4.2.0'
+    testCompile ("org.jetbrains.spek:spek-api:$spekVersion") {
+        exclude group: 'org.jetbrains.kotlin'
+    }
+    testCompile ("org.jetbrains.spek:spek-subject-extension:$spekVersion") {
+        exclude group: 'org.jetbrains.kotlin'
+    }
+    testRuntime ("org.jetbrains.spek:spek-junit-platform-engine:$spekVersion") {
+        exclude group: 'org.junit.platform'
+        exclude group: 'org.jetbrains.kotlin'
+    }
+}
