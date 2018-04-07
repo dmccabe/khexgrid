@@ -21,7 +21,7 @@ class LayeredRenderer(private val map: HexagonalMap, private val layers: List<La
         }
 
     private fun cullTiles(tiles: Collection<HexagonalTile>, cullingArea: Rectangle): Collection<HexagonalTile> {
-        val size = map.size
+        val size = map.tileSize
         val area = Rectangle(0f, 0f, size.x * 2f, size.y * 2f)
         return tiles.filter {
             area.setPosition(map.toPixel(it.location).toVector2() - size)

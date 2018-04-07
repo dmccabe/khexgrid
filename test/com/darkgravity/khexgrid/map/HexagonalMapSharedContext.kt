@@ -18,7 +18,7 @@ object HexagonalMapSharedContext {
                 coordinate to HexagonalTile(coordinate, terrains[column % terrains.size])
             }
         }.toMap()
-        return HexagonalMap(HexagonalLayout(orientation, Vector2(), Vector2(50f, 50f)), columns, rows, tiles)
+        return HexagonalMap(HexagonalLayout(orientation, Vector2(), Vector2(50f, 50f)), tiles)
     }
 }
 
