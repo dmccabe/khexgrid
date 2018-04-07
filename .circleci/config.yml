@@ -39,4 +39,4 @@ jobs:
           key: v1-assemble-{{ checksum "build.gradle" }}
 
       # run tests!
-      - run: gradle khexgrid:test
+      - run: gradle test
