@@ -6,7 +6,7 @@ Based on Red Blob Games' [fantastic guide](https://www.redblobgames.com/grids/he
 ## Overview
 Locations in the map are represented as `CubeCoordinate`s. A `CubeCoordinate` has many handy operations built-in, but knows nothing of the external map structure. These objects are immutable by design, but can readily be converted to several other types, such as `OffsetCoordinate`s or vectors.
 
-A `HexagonalMap` consists of a series of `CubeCoordinate`s mapped to `HexagonalTile`s at those locations. The corresponding `HexagonalLayout` and `HexagonalOrientation` can be used to control the position and appearance of the tiles.
+A `HexagonalMap` consists of a series of `CubeCoordinate`s mapped to `HexagonalTile`s at those locations. The corresponding `HexagonalLayout` and `HexagonalOrientation` can be used to control the position and appearance of the tiles. Maps of any shape and size can be created using this method - square, rectanglar, triangular, completely irregular - you name it.
 
 A map can be drawn using a `LayeredRenderer`. The renderer will draw any `Layer`s provided. It will also handle culling the tiles that are drawn to the camera's viewable area to reduce unnecessary drawing. Some simple `Layer` implementations are also included.
 
@@ -20,7 +20,7 @@ Create map
             coordinate to HexagonalTile(coordinate, getTerrain(column, row))
         }
     }.toMap()
-    val map = HexagonalMap(layout, columns, rows, tiles)
+    val map = HexagonalMap(layout, tiles)
 
 Find movable locations within 3 tiles of location (`CubeCoordinate`)
 
