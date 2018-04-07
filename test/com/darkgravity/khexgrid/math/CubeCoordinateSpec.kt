@@ -135,7 +135,7 @@ object CubeCoordinateSpec : SubjectSpek<CubeCoordinate>( {
                 }
                 it("returns ring in correct order") {
                     val neighbors = subject.neighbors()
-                    assert.that(result, equalTo(neighbors.subList(4, neighbors.lastIndex) + neighbors.subList(0, 4)))
+                    assert.that(result, equalTo(neighbors.subList(4, neighbors.size) + neighbors.subList(0, 4)))
                 }
             }
             on("radius 1 with start direction of 2") {
@@ -145,7 +145,7 @@ object CubeCoordinateSpec : SubjectSpek<CubeCoordinate>( {
                 }
                 it("returns ring in correct order") {
                     val neighbors = subject.neighbors()
-                    assert.that(result, equalTo(neighbors.subList(2, neighbors.lastIndex) + neighbors.subList(0, 2)))
+                    assert.that(result, equalTo(neighbors.subList(2, neighbors.size) + neighbors.subList(0, 2)))
                 }
             }
             on("radius 2 with default start direction") {

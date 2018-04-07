@@ -53,7 +53,7 @@ class HexagonalMap(val layout: HexagonalLayout, val width: Int, val height: Int,
 
     fun getReachableLocations(movable: Movable, range: Int): List<CubeCoordinate> = getReachableLocations(movable.location, range)
 
-    fun getReachableLocations(coordinate: CubeCoordinate, range: Int) =
+    fun getReachableLocations(coordinate: CubeCoordinate, range: Int): List<CubeCoordinate> =
         tiles[coordinate]?.let { source -> getReachableTiles(source, range).map { it.location } } ?: listOf()
 
     fun getReachableTiles(source: HexagonalTile, range: Int): List<HexagonalTile> {
@@ -71,10 +71,10 @@ class HexagonalMap(val layout: HexagonalLayout, val width: Int, val height: Int,
         return reachable.keys.toList()
     }
 
-    fun getVisibleLocations(visibilityLocation: VisibilityLocation) =
+    fun getVisibleLocations(visibilityLocation: VisibilityLocation): List<CubeCoordinate> =
         getVisibleLocations(visibilityLocation.location, visibilityLocation.visibleRange)
 
-    fun getVisibleLocations(coordinate: CubeCoordinate, range: Int) =
+    fun getVisibleLocations(coordinate: CubeCoordinate, range: Int): List<CubeCoordinate> =
         tiles[coordinate]?.let { source -> getVisibleTiles(source, range).map { it.location } } ?: listOf()
 
     fun getVisibleTiles(source: HexagonalTile, range: Int): List<HexagonalTile> {
@@ -92,9 +92,9 @@ class HexagonalMap(val layout: HexagonalLayout, val width: Int, val height: Int,
         }.map { it.toCubeCoordinate() }
     }
 
-    fun isMovableLocation(coordinate: CubeCoordinate) = !(tiles[coordinate]?.isMoveObstacle ?: true)
+    fun isMovableLocation(coordinate: CubeCoordinate): Boolean = !(tiles[coordinate]?.isMoveObstacle ?: true)
 
-    fun isValidLocation(coordinate: CubeCoordinate) = coordinate in tiles
+    fun isValidLocation(coordinate: CubeCoordinate): Boolean = coordinate in tiles
 
-    fun getMovementCost(coordinate: CubeCoordinate) = tiles[coordinate]?.movementCost ?: Int.MAX_VALUE
+    fun getMovementCost(coordinate: CubeCoordinate): Int = tiles[coordinate]?.movementCost ?: Int.MAX_VALUE
 }
