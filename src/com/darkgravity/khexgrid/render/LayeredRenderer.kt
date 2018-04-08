@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Rectangle
 import com.darkgravity.khexgrid.map.HexagonalMap
 import com.darkgravity.khexgrid.map.HexagonalTile
 import com.darkgravity.khexgrid.math.minus
+import com.darkgravity.khexgrid.math.times
 import com.darkgravity.khexgrid.math.toVector2
 
 /**
@@ -21,8 +22,9 @@ class LayeredRenderer(private val map: HexagonalMap, private val layers: List<La
         }
 
     private fun cullTiles(tiles: Collection<HexagonalTile>, cullingArea: Rectangle): Collection<HexagonalTile> {
-        val size = map.tileSize
-        val area = Rectangle(0f, 0f, size.x * 2f, size.y * 2f)
+        // using size slightly bigger than tile size to avoid partially shown tiles from getting culled
+        val size = map.tileSize * 1.5f
+        val area = Rectangle(0f, 0f, size.x * 2f + map.tileSize.x, size.y * 2f + map.tileSize.y)
         return tiles.filter {
             area.setPosition(map.toPixel(it.location).toVector2() - size)
             cullingArea.overlaps(area)
