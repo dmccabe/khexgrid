@@ -1,12 +1,14 @@
 # KHexGrid
-Kotlin implementation of hexagonal grids using LibGDX
+Kotlin implementation of hexagonal grids using LibGDX.
+
+Allows for grids of any size and shape - square, rectangular, triangular, or even irregular. Supports both pointy-top and flat-top hexes.
 
 Based on Red Blob Games' [fantastic guide](https://www.redblobgames.com/grids/hexagons/) on hexagonal grids.
 
 ## Overview
 Locations in the map are represented as `CubeCoordinate`s. A `CubeCoordinate` has many handy operations built-in, but knows nothing of the external map structure. These objects are immutable by design, but can readily be converted to several other types, such as `OffsetCoordinate`s or vectors.
 
-A `HexagonalMap` consists of a series of `CubeCoordinate`s mapped to `HexagonalTile`s at those locations. The corresponding `HexagonalLayout` and `HexagonalOrientation` can be used to control the position and appearance of the tiles. Maps of any shape and size can be created using this method - square, rectanglar, triangular, completely irregular - you name it.
+A `HexagonalMap` consists of a series of `CubeCoordinate`s mapped to `HexagonalTile`s at those locations. The corresponding `HexagonalLayout` and `HexagonalOrientation` can be used to control the position and appearance of the tiles. A `HexagonalTile` is composed of a location and a `Terrain`, which defines rules for tiles such as movement cost and visibility.
 
 A map can be drawn using a `LayeredRenderer`. The renderer will draw any `Layer`s provided. It will also handle culling the tiles that are drawn to the camera's viewable area to reduce unnecessary drawing. Some simple `Layer` implementations are also included.
 
@@ -22,21 +24,21 @@ Create map
     }.toMap()
     val map = HexagonalMap(layout, tiles)
 
-Find movable locations within 3 tiles of location (`CubeCoordinate`)
-
-    map.getReachableLocations(location, 3)
-    
-Find visible locations (i.e. tiles with unobstructed view) within 5 tiles of location
-
-    map.getVisibleLocations(location, 5)
-    
-Find all valid locations within 10 tiles of location
+Find all valid locations within 10 tiles of a location (`CubeCoordinate`)
 
     location.withinRange(10).filter { map.isValidLocation(it) }
     
-Find all tiles that are 3 tiles away from location
+Find all locations that are 3 tiles away from a location
 
-    location.ring(3)
+    location.ring(3)    
+
+Find locations that can be moved to at a movement cost of 5 or less
+
+    map.getReachableLocations(location, 5)
+    
+Find visible locations (i.e. tiles with unobstructed view) within 7 tiles of location
+
+    map.getVisibleLocations(location, 7)
     
 Draw map to screen
 
