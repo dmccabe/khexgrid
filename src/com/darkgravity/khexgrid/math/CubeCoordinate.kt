@@ -11,22 +11,10 @@ import kotlin.math.roundToInt
 /**
  * @author Dan McCabe
  */
-class CubeCoordinate(x: Int = 0, y: Int = 0, z: Int = -x - y) {
-
-    var x: Int = 0
-        private set
-
-    var y: Int = 0
-        private set
-
-    var z: Int = 0
-        private set
+data class CubeCoordinate(val x: Int = 0, val y: Int = 0, val z: Int = -x - y) {
 
     init {
         require(x + y + z == 0) { "x, y, and z values must add up to 0" }
-        this.x = x
-        this.y = y
-        this.z = z
     }
 
     operator fun unaryMinus(): CubeCoordinate = CubeCoordinate(-x, -y, -z)
@@ -112,23 +100,6 @@ class CubeCoordinate(x: Int = 0, y: Int = 0, z: Int = -x - y) {
     fun toVector2(): Vector2 = Vector2(x.toFloat(), y.toFloat())
 
     fun toVector3(): Vector3 = Vector3(x.toFloat(), y.toFloat(), z.toFloat())
-
-    override fun toString(): String = "x = $x, y = $y, z = $z"
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other == null || javaClass != other.javaClass) return false
-
-        val that = other as CubeCoordinate?
-        return x == that!!.x && y == that.y && z == that.z
-    }
-
-    override fun hashCode(): Int {
-        var result = x
-        result = 31 * result + y
-        result = 31 * result + z
-        return result
-    }
 
     companion object {
         var DIRECTIONS = listOf(CubeCoordinate(1, 0, -1), CubeCoordinate(1, -1, 0), CubeCoordinate(0, -1, 1),
