@@ -10,6 +10,6 @@ import com.darkgravity.khexgrid.map.HexagonalTile
 class TileOutlineLayer(private val hexagonalRenderer: HexagonalRenderer, shapeRenderer: ShapeRenderer) : ShapeRendererLayer(shapeRenderer) {
     override fun render(batch: PolygonSpriteBatch, tiles: Collection<HexagonalTile>) =
         tiles.forEach {
-            hexagonalRenderer.renderOutline(shapeRenderer, it.location, 2)
+            hexagonalRenderer.renderOutline(shapeRenderer, it.location, 2f)
         }
 }

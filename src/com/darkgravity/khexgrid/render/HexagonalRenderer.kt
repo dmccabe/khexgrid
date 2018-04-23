@@ -44,7 +44,7 @@ class HexagonalRenderer(map: HexagonalMap, private val hexagonSpriteSize: Vector
         }
     }
 
-    fun renderOutline(renderer: ShapeRenderer, location: CubeCoordinate, thickness: Int = 1) {
+    fun renderOutline(renderer: ShapeRenderer, location: CubeCoordinate, thickness: Float = 1f) {
         val vertices = cache[location]!!.vertices
         var i = 0
         val vertexCount = vertices.size
@@ -54,7 +54,7 @@ class HexagonalRenderer(map: HexagonalMap, private val hexagonSpriteSize: Vector
             val y1 = vertices[i + 1]
             val x2 = if (isLast) vertices[0] else vertices[i + 2]
             val y2 = if (isLast) vertices[1] else vertices[i + 3]
-            renderer.rectLine(x1, y1, x2, y2, thickness.toFloat())
+            renderer.rectLine(x1, y1, x2, y2, thickness)
             i += 2
         }
     }
