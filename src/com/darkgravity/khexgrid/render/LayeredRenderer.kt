@@ -16,10 +16,13 @@ class LayeredRenderer(private val map: HexagonalMap, private val layers: List<La
 
     private var culledTiles: Collection<HexagonalTile> = cullTiles(map.tiles.values, camera.viewArea)
 
-    fun render(batch: PolygonSpriteBatch) =
+    fun render(batch: PolygonSpriteBatch) {
+        batch.begin()
         layers.forEach { layer ->
             layer.use(batch) { layer.render(batch, culledTiles) }
         }
+        batch.end()
+    }
 
     private fun cullTiles(tiles: Collection<HexagonalTile>, cullingArea: Rectangle): Collection<HexagonalTile> {
         // using size slightly bigger than tile size to avoid partially shown tiles from getting culled
