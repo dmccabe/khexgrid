@@ -8,7 +8,10 @@ import com.darkgravity.khexgrid.math.OffsetCoordinateType
 /**
  * @author Dan McCabe
  */
-class HexagonalMap(val layout: HexagonalLayout, val tiles: Map<CubeCoordinate, HexagonalTile>) {
+class HexagonalMap(val layout: HexagonalLayout, tiles: Map<CubeCoordinate, HexagonalTile>) {
+
+    val mutableTiles = tiles.toMutableMap()
+    val tiles: Map<CubeCoordinate, HexagonalTile> = mutableTiles
 
     val orientation get() = layout.orientation
     val position get() = layout.position
@@ -43,6 +46,10 @@ class HexagonalMap(val layout: HexagonalLayout, val tiles: Map<CubeCoordinate, H
     val topMovableEdge = topEdge.intersect(movableTileMap.keys).toList()
     val rightMovableEdge = rightEdge.intersect(movableTileMap.keys).toList()
     val bottomMovableEdge = bottomEdge.intersect(movableTileMap.keys).toList()
+
+    operator fun set(coordinate: CubeCoordinate, terrain: Terrain) {
+        mutableTiles[coordinate] = HexagonalTile(coordinate, terrain)
+    }
 
     fun resizeLayout(size: Vector2): HexagonalMap = HexagonalMap(layout.resize(size), tiles)
 
