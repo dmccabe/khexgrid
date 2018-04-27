@@ -8,9 +8,11 @@ import com.darkgravity.khexgrid.map.HexagonalTile
  */
 open class LayerAdapter : Layer {
     override fun use(batch: PolygonSpriteBatch, action: () -> Unit) {
+        batch.begin()
         begin(batch)
         action()
         end(batch)
+        batch.end()
     }
 
     override fun begin(batch: PolygonSpriteBatch) {}
