@@ -2,6 +2,7 @@ package com.darkgravity.khexgrid.map
 
 import com.badlogic.gdx.math.GridPoint2
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.math.Vector3
 import com.darkgravity.khexgrid.math.*
 import kotlin.math.PI
 import kotlin.math.cos
@@ -16,7 +17,10 @@ class HexagonalLayout(val orientation: HexagonalOrientation, val position: Vecto
 
     fun toPixel(coordinate: CubeCoordinate): GridPoint2 = toVector(coordinate).toGridPoint2()
 
-    fun toHex(pixel: GridPoint2): CubeCoordinate = orientation.backward.multiply((pixel - position) / tileSize).toCubeCoordinate()
+    fun toHex(pixel: GridPoint2): CubeCoordinate {
+        val location = orientation.backward * ((pixel - position) / tileSize)
+        return Vector3(location.x, location.y, -location.x - location.y).toCubeCoordinate()
+    }
 
     fun polygonCorners(coordinate: CubeCoordinate): List<Vector2> {
         val center = toVector(coordinate)
