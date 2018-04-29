@@ -13,6 +13,10 @@ class HexagonalMap(val layout: HexagonalLayout, tiles: Map<CubeCoordinate, Hexag
     val mutableTiles = tiles.toMutableMap()
     val tiles: Map<CubeCoordinate, HexagonalTile> = mutableTiles
 
+    var movableTiles: Map<CubeCoordinate, HexagonalTile> = calculateMovableTiles()
+        private set
+    val movableLocations get() = this.movableTiles.keys.toList()
+
     val orientation get() = layout.orientation
     val position get() = layout.position
     val tileSize get() = layout.tileSize
@@ -31,26 +35,37 @@ class HexagonalMap(val layout: HexagonalLayout, tiles: Map<CubeCoordinate, Hexag
     val worldHeight get() = height * tileSize.y
     val worldSize get() = Vector2(worldWidth, worldHeight)
 
-    val movableTileMap: Map<CubeCoordinate, HexagonalTile> by lazy {
-        tiles.filterNot { it.value.isMoveObstacle }
-    }
-    val movableLocations get() = movableTileMap.keys.toList()
-    val movableTiles get() = movableTileMap.values.toList()
-
     val leftEdge get() = getOffsetLine(minOffsetX, null)
     val topEdge get() = getOffsetLine(minOfsetY, null)
     val rightEdge get() = getOffsetLine(maxOffsetX, null)
     val bottomEdge get() = getOffsetLine(maxOffsetY, null)
 
-    val leftMovableEdge = leftEdge.intersect(movableTileMap.keys).toList()
-    val topMovableEdge = topEdge.intersect(movableTileMap.keys).toList()
-    val rightMovableEdge = rightEdge.intersect(movableTileMap.keys).toList()
-    val bottomMovableEdge = bottomEdge.intersect(movableTileMap.keys).toList()
+    var leftMovableEdge = calculateMovableEdge(leftEdge)
+        private set
+    var topMovableEdge = calculateMovableEdge(topEdge)
+        private set
+    var rightMovableEdge = calculateMovableEdge(rightEdge)
+        private set
+    var bottomMovableEdge = calculateMovableEdge(bottomEdge)
+        private set
+
+    private fun calculateMovableTiles() = tiles.filterNot { it.value.isMoveObstacle }
+
+    private fun calculateMovableEdge(edge: List<CubeCoordinate>) = edge.intersect(movableLocations).toList()
+
+    private fun tilesChanged() {
+        movableTiles = calculateMovableTiles()
+        leftMovableEdge = calculateMovableEdge(leftEdge)
+        topMovableEdge = calculateMovableEdge(topEdge)
+        rightMovableEdge = calculateMovableEdge(rightEdge)
+        bottomMovableEdge = calculateMovableEdge(bottomEdge)
+    }
 
     operator fun get(coordinate: CubeCoordinate) : Terrain? = tiles[coordinate]?.terrain
 
     operator fun set(coordinate: CubeCoordinate, terrain: Terrain) {
         mutableTiles[coordinate] = HexagonalTile(coordinate, terrain)
+        tilesChanged()
     }
 
     operator fun minusAssign(coordinate: CubeCoordinate) {
