@@ -47,8 +47,14 @@ class HexagonalMap(val layout: HexagonalLayout, tiles: Map<CubeCoordinate, Hexag
     val rightMovableEdge = rightEdge.intersect(movableTileMap.keys).toList()
     val bottomMovableEdge = bottomEdge.intersect(movableTileMap.keys).toList()
 
+    operator fun get(coordinate: CubeCoordinate) : Terrain? = tiles[coordinate]?.terrain
+
     operator fun set(coordinate: CubeCoordinate, terrain: Terrain) {
         mutableTiles[coordinate] = HexagonalTile(coordinate, terrain)
+    }
+
+    operator fun minusAssign(coordinate: CubeCoordinate) {
+        mutableTiles -= coordinate
     }
 
     fun resizeLayout(size: Vector2): HexagonalMap = HexagonalMap(layout.resize(size), tiles)

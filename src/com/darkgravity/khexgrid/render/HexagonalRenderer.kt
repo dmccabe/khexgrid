@@ -24,7 +24,7 @@ class HexagonalRenderer(map: HexagonalMap, private val hexagonSpriteSize: Vector
         renderTexture(batch, TextureRegion(texture), location)
 
     fun renderTexture(batch: PolygonSpriteBatch, textureRegion: TextureRegion, location: CubeCoordinate) {
-        val entry = cache[location]!!
+        val entry = cache[location]
 
         // draw colored tiles using the polygon vertices so they have the right shape
         if (textureRegion.regionWidth == 1 || textureRegion.regionHeight == 1) {
@@ -45,7 +45,7 @@ class HexagonalRenderer(map: HexagonalMap, private val hexagonSpriteSize: Vector
     }
 
     fun renderOutline(renderer: ShapeRenderer, location: CubeCoordinate, thickness: Float = 1f) {
-        val vertices = cache[location]!!.vertices
+        val vertices = cache[location].vertices
         var i = 0
         val vertexCount = vertices.size
         while (i < vertexCount) {

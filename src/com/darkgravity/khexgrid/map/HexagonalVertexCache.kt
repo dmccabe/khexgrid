@@ -5,12 +5,12 @@ import com.darkgravity.khexgrid.math.CubeCoordinate
 /**
  * @author Dan McCabe
  */
-class HexagonalVertexCache(map: HexagonalMap) {
-    private val locationVertices = map.tiles.keys.associate { it to CachedEntry(map.polygonVertices(it)) }
+class HexagonalVertexCache(private val map: HexagonalMap) {
+    private val locationVertices = map.tiles.keys.associate { it to CachedEntry(map.polygonVertices(it)) }.toMutableMap()
 
     operator fun get(tile: HexagonalTile) = this[tile.location]
 
-    operator fun get(coordinate: CubeCoordinate) = locationVertices[coordinate]
+    operator fun get(coordinate: CubeCoordinate) = locationVertices.getOrPut(coordinate, { CachedEntry(map.polygonVertices(coordinate))} )
 
     class CachedEntry(val vertices: FloatArray) {
         private val xCoordinates = vertices.filterIndexed { index, _ -> index % 2 == 0 }
