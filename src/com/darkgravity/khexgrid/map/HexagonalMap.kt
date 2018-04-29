@@ -70,6 +70,7 @@ class HexagonalMap(val layout: HexagonalLayout, tiles: Map<CubeCoordinate, Hexag
 
     operator fun minusAssign(coordinate: CubeCoordinate) {
         mutableTiles -= coordinate
+        tilesChanged()
     }
 
     fun resizeLayout(size: Vector2): HexagonalMap = HexagonalMap(layout.resize(size), tiles)
