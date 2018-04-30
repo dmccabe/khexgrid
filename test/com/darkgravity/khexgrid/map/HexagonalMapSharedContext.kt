@@ -22,10 +22,14 @@ object HexagonalMapSharedContext {
     }
 }
 
-enum class TestTerrain(override val isMoveObstacle: Boolean, override val isViewObstacle: Boolean, override val movementCost: Int) : Terrain {
+enum class TestTerrain(override val isMoveObstacle: Boolean,
+                       override val isViewObstacle: Boolean,
+                       override val movementCost: Int) : Terrain {
     GRASS(false, false, 1),
     FOREST(false, false, 2),
     DESERT(false, false, 2),
     WATER(true, false, 3),
-    MOUNTAIN(false, true, 3)
+    MOUNTAIN(false, true, 3);
+
+    override val id: String get() = name
 }

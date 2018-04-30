@@ -8,11 +8,14 @@ import kotlin.math.sqrt
  * @author Dan McCabe
  */
 sealed class HexagonalOrientation(val forward: Matrix2, val backward: Matrix2, val startAngle: Float) {
+    abstract val id: String
+
     object PointyTop : HexagonalOrientation(
         Matrix2(sqrt(3.0).toFloat(), sqrt(3.0).toFloat() / 2.0f, 0.0f, 3.0f / 2.0f),
         Matrix2(sqrt(3.0).toFloat() / 3.0f, -1.0f / 3.0f, 0.0f, 2.0f / 3.0f),
         0.5f
     ) {
+        override val id = "pointy-top"
         val DIRECTION_NE = CubeCoordinate.DIRECTIONS[0]
         val DIRECTION_E = CubeCoordinate.DIRECTIONS[1]
         val DIRECTION_SE = CubeCoordinate.DIRECTIONS[2]
@@ -33,6 +36,7 @@ sealed class HexagonalOrientation(val forward: Matrix2, val backward: Matrix2, v
         Matrix2(2.0f / 3.0f, 0.0f, -1.0f / 3.0f, sqrt(3.0).toFloat() / 3.0f),
         0.0f
     ) {
+        override val id = "flat-top"
         val DIRECTION_NE = CubeCoordinate.DIRECTIONS[0]
         val DIRECTION_SE = CubeCoordinate.DIRECTIONS[1]
         val DIRECTION_S = CubeCoordinate.DIRECTIONS[2]
@@ -46,5 +50,15 @@ sealed class HexagonalOrientation(val forward: Matrix2, val backward: Matrix2, v
         val DIAGONAL_W = CubeCoordinate.DIAGONALS[3]
         val DIAGONAL_NW = CubeCoordinate.DIAGONALS[4]
         val DIAGONAL_NE = CubeCoordinate.DIAGONALS[5]
+    }
+
+    companion object {
+        fun fromId(id: String) =
+            when (id) {
+                PointyTop.id -> PointyTop
+                FlatTop.id -> FlatTop
+                else -> throw IllegalArgumentException("Invalid orientation: $id")
+            }
+
     }
 }
