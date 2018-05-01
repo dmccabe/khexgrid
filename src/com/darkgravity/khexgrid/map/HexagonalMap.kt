@@ -68,8 +68,23 @@ class HexagonalMap(val layout: HexagonalLayout, tiles: Map<CubeCoordinate, Hexag
         tilesChanged()
     }
 
+    operator fun plusAssign(tile: HexagonalTile) {
+        mutableTiles += tile.location to tile
+        tilesChanged()
+    }
+
+    operator fun plusAssign(tiles: List<HexagonalTile>) {
+        mutableTiles += tiles.map { it.location to it }
+        tilesChanged()
+    }
+
     operator fun minusAssign(coordinate: CubeCoordinate) {
         mutableTiles -= coordinate
+        tilesChanged()
+    }
+
+    operator fun minusAssign(coordinates: List<CubeCoordinate>) {
+        mutableTiles -= coordinates
         tilesChanged()
     }
 
