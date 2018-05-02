@@ -38,6 +38,8 @@ class HexagonalRenderer(map: HexagonalMap, private val hexagonSpriteSize: Vector
         }
 
     fun renderPolygonTexture(batch: PolygonSpriteBatch, textureRegion: TextureRegion, location: CubeCoordinate) =
+        // the PolygonRegion is used to cut a polygonal shape out of a texture region, which means the draw vertices
+        // need to be at the origin to work correctly
         with(PolygonSprite(PolygonRegion(textureRegion, drawVertices, TRIANGLE_DRAW_ORDER))) {
             val entry = cache[location]
             setPosition(entry.minX, entry.minY)
