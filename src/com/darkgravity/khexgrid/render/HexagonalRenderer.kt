@@ -1,48 +1,57 @@
 package com.darkgravity.khexgrid.render
 
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.graphics.g2d.PolygonRegion
-import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
-import com.badlogic.gdx.graphics.g2d.Sprite
-import com.badlogic.gdx.graphics.g2d.TextureRegion
+import com.badlogic.gdx.graphics.g2d.*
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Vector2
 import com.darkgravity.khexgrid.map.HexagonalMap
 import com.darkgravity.khexgrid.map.HexagonalVertexCache
 import com.darkgravity.khexgrid.math.CubeCoordinate
-import kotlin.math.max
 
 /**
  * @author Dan McCabe
  */
 class HexagonalRenderer(map: HexagonalMap, private val hexagonSpriteSize: Vector2) {
 
+    private val drawVertices: FloatArray
     private val cache = HexagonalVertexCache(map)
+
+    init {
+        drawVertices = map.polygonVertices(CubeCoordinate())
+        val minX = drawVertices.filterIndexed { index: Int, _: Float -> index % 2 == 0 }.min() ?: 0f
+        val minY = drawVertices.filterIndexed { index: Int, _: Float -> index % 2 == 1 }.min() ?: 0f
+        for (i in drawVertices.indices) {
+            drawVertices[i] = drawVertices[i] - if (i % 2 == 0) minX else minY
+        }
+    }
 
     fun renderTexture(batch: PolygonSpriteBatch, texture: Texture, location: CubeCoordinate) =
         renderTexture(batch, TextureRegion(texture), location)
 
-    fun renderTexture(batch: PolygonSpriteBatch, textureRegion: TextureRegion, location: CubeCoordinate) {
-        val entry = cache[location]
-
+    fun renderTexture(batch: PolygonSpriteBatch, textureRegion: TextureRegion, location: CubeCoordinate) =
         // draw colored tiles using the polygon vertices so they have the right shape
         if (textureRegion.regionWidth == 1 || textureRegion.regionHeight == 1) {
-            with(batch) {
-                color = Color.WHITE
-                draw(PolygonRegion(textureRegion, entry.vertices, TRIANGLE_DRAW_ORDER), 0f, 0f)
-            }
-
+            renderPolygonTexture(batch, textureRegion, location)
         // draw sprite tiles as a normal sprite since they already have the right shape
         } else {
-            with(Sprite(textureRegion)) {
-                val scale = max(entry.width / hexagonSpriteSize.x, entry.height / hexagonSpriteSize.y)
-                setCenter(entry.midX, entry.midY)
-                setScale(scale)
-                draw(batch)
-            }
+            renderSpriteTexture(batch, textureRegion, location)
         }
-    }
+
+    fun renderPolygonTexture(batch: PolygonSpriteBatch, textureRegion: TextureRegion, location: CubeCoordinate) =
+        with(PolygonSprite(PolygonRegion(textureRegion, drawVertices, TRIANGLE_DRAW_ORDER))) {
+            val entry = cache[location]
+            setPosition(entry.minX, entry.minY)
+            draw(batch)
+        }
+
+    fun renderSpriteTexture(batch: PolygonSpriteBatch, textureRegion: TextureRegion, location: CubeCoordinate) =
+        with(Sprite(textureRegion)) {
+            val entry = cache[location]
+            val scale = kotlin.math.max(entry.width / hexagonSpriteSize.x, entry.height / hexagonSpriteSize.y)
+            setCenter(entry.midX, entry.midY)
+            setScale(scale)
+            draw(batch)
+        }
 
     fun renderOutline(renderer: ShapeRenderer, location: CubeCoordinate, thickness: Float = 1f) {
         val vertices = cache[location].vertices
