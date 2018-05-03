@@ -4,11 +4,14 @@ import com.badlogic.gdx.math.GridPoint2
 import com.badlogic.gdx.math.Vector2
 import com.darkgravity.khexgrid.math.CubeCoordinate
 import com.darkgravity.khexgrid.math.OffsetCoordinateType
+import com.darkgravity.khexgrid.observer.Observable
+import com.darkgravity.khexgrid.observer.ObservableSubject
 
 /**
  * @author Dan McCabe
  */
-class HexagonalMap(val layout: HexagonalLayout, tiles: Map<CubeCoordinate, HexagonalTile>) {
+class HexagonalMap(val layout: HexagonalLayout, tiles: Map<CubeCoordinate, HexagonalTile>) :
+    Observable<HexagonalMapListener> by ObservableSubject() {
 
     val mutableTiles = tiles.toMutableMap()
     val tiles: Map<CubeCoordinate, HexagonalTile> = mutableTiles
@@ -59,6 +62,7 @@ class HexagonalMap(val layout: HexagonalLayout, tiles: Map<CubeCoordinate, Hexag
         topMovableEdge = calculateMovableEdge(topEdge)
         rightMovableEdge = calculateMovableEdge(rightEdge)
         bottomMovableEdge = calculateMovableEdge(bottomEdge)
+        notify { it.tilesChanged(this) }
     }
 
     operator fun get(coordinate: CubeCoordinate) : Terrain? = tiles[coordinate]?.terrain
