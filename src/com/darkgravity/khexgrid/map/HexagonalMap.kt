@@ -136,7 +136,7 @@ class HexagonalMap(val layout: HexagonalLayout, tiles: Map<CubeCoordinate, Hexag
     fun getVisibleTiles(source: HexagonalTile, range: Int): List<HexagonalTile> {
         val visible = source.location.withinRange(range) + listOf(source.location)
         return visible.mapNotNull { tiles[it] }.filter { tile ->
-            tile.location.lineDrawMidpoints(source.location).mapNotNull { tiles[it] }.none { it.isViewObstacle }
+            tile.location.lineDrawMidpoints(source.location).asSequence().mapNotNull { tiles[it] }.none { it.isViewObstacle }
         }
     }
 
