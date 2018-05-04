@@ -56,40 +56,41 @@ class HexagonalMap(val layout: HexagonalLayout, tiles: Map<CubeCoordinate, Hexag
 
     private fun calculateMovableEdge(edge: List<CubeCoordinate>) = edge.intersect(movableLocations).toList()
 
-    private fun tilesChanged() {
+    private fun tilesChanged(locations: List<CubeCoordinate>) {
         movableTiles = calculateMovableTiles()
         leftMovableEdge = calculateMovableEdge(leftEdge)
         topMovableEdge = calculateMovableEdge(topEdge)
         rightMovableEdge = calculateMovableEdge(rightEdge)
         bottomMovableEdge = calculateMovableEdge(bottomEdge)
-        notify { it.tilesChanged(this) }
+        notify { it.tilesChanged(this, locations) }
     }
 
     operator fun get(coordinate: CubeCoordinate) : Terrain? = tiles[coordinate]?.terrain
 
     operator fun set(coordinate: CubeCoordinate, terrain: Terrain) {
         mutableTiles[coordinate] = HexagonalTile(coordinate, terrain)
-        tilesChanged()
+        tilesChanged(listOf(coordinate))
     }
 
     operator fun plusAssign(tile: HexagonalTile) {
         mutableTiles += tile.location to tile
-        tilesChanged()
+        tilesChanged(listOf(tile.location))
     }
 
     operator fun plusAssign(tiles: List<HexagonalTile>) {
-        mutableTiles += tiles.map { it.location to it }
-        tilesChanged()
+        val locations = tiles.map { it.location to it }
+        mutableTiles += locations
+        tilesChanged(locations.map { it.first })
     }
 
     operator fun minusAssign(coordinate: CubeCoordinate) {
         mutableTiles -= coordinate
-        tilesChanged()
+        tilesChanged(listOf(coordinate))
     }
 
     operator fun minusAssign(coordinates: List<CubeCoordinate>) {
         mutableTiles -= coordinates
-        tilesChanged()
+        tilesChanged(coordinates)
     }
 
     fun resizeLayout(size: Vector2): HexagonalMap = HexagonalMap(layout.resize(size), tiles)
