@@ -30,8 +30,8 @@ class HexagonalMap(val layout: HexagonalLayout, tiles: Map<CubeCoordinate, Hexag
     val maxOffsetX = getOffsetLocations().maxBy { it.x }?.x ?: 0
     val maxOffsetY = getOffsetLocations().maxBy { it.y }?.y ?: 0
 
-    val width get() = maxOffsetX - minOffsetX
-    val height get() = maxOffsetY - minOfsetY
+    val width get() = maxOffsetX - minOffsetX + 1
+    val height get() = maxOffsetY - minOfsetY + 1
     val size get() = GridPoint2(width, height)
 
     val worldWidth get() = width * tileSize.x
