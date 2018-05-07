@@ -13,11 +13,10 @@ import com.darkgravity.khexgrid.math.CubeCoordinate
  */
 class HexagonalRenderer(map: HexagonalMap, private val hexagonSpriteSize: Vector2) {
 
-    private val drawVertices: FloatArray
+    private val drawVertices = map.polygonVertices(CubeCoordinate())
     private val cache = HexagonalVertexCache(map)
 
     init {
-        drawVertices = map.polygonVertices(CubeCoordinate())
         val minX = drawVertices.filterIndexed { index: Int, _: Float -> index % 2 == 0 }.min() ?: 0f
         val minY = drawVertices.filterIndexed { index: Int, _: Float -> index % 2 == 1 }.min() ?: 0f
         for (i in drawVertices.indices) {
