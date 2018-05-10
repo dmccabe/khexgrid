@@ -32,6 +32,7 @@ class HexagonalMap(val layout: HexagonalLayout, tiles: Map<CubeCoordinate, Hexag
 
     val width get() = maxOffsetX - minOffsetX + 1
     val height get() = maxOffsetY - minOfsetY + 1
+    val aspectRatio get() = width.toFloat() / height.toFloat()
     val size get() = GridPoint2(width, height)
 
     val worldWidth get() = width * tileSize.x
@@ -51,6 +52,10 @@ class HexagonalMap(val layout: HexagonalLayout, tiles: Map<CubeCoordinate, Hexag
         private set
     var bottomMovableEdge = calculateMovableEdge(bottomEdge)
         private set
+
+    init {
+        println("Has ${tiles.size} tiles, $width X $height")
+    }
 
     private fun calculateMovableTiles() = tiles.filterNot { it.value.isMoveObstacle }
 
