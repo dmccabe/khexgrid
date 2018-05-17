@@ -39,11 +39,13 @@ class HexagonalMap(val layout: HexagonalLayout, tiles: Map<CubeCoordinate, Hexag
     val worldHeight get() = height * tileSize.y
     val worldSize get() = Vector2(worldWidth, worldHeight)
 
-    // FIXME: these need to go row-by-row and find the biggest / smallest x or y value on that row; this won't work for an irregular map
-    val leftEdge get() = getOffsetLine(minOffsetX, null)
-    val bottomEdge get() = getOffsetLine(null, minOfsetY)
-    val rightEdge get() = getOffsetLine(maxOffsetX, null)
-    val topEdge get() = getOffsetLine(null, maxOffsetY)
+    val rows: List<List<CubeCoordinate>> get() = getOffsetLocations().groupBy { it.y }.map { it.value.map { it.toCubeCoordinate() } }
+    val columns: List<List<CubeCoordinate>> get() = getOffsetLocations().groupBy { it.x }.map { it.value.map { it.toCubeCoordinate() } }
+
+    val leftEdge: List<CubeCoordinate> get() = rows.map { locations -> checkNotNull(locations.minBy { it.x }) }
+    val bottomEdge: List<CubeCoordinate> get() = columns.map { locations -> checkNotNull(locations.minBy { it.y }) }
+    val rightEdge: List<CubeCoordinate> get() = rows.map { locations -> checkNotNull(locations.maxBy { it.x }) }
+    val topEdge: List<CubeCoordinate> get() = columns.map { locations -> checkNotNull(locations.maxBy { it.y }) }
 
     var leftMovableEdge = calculateMovableEdge(leftEdge)
         private set
