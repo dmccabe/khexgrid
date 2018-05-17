@@ -41,9 +41,9 @@ class HexagonalMap(val layout: HexagonalLayout, tiles: Map<CubeCoordinate, Hexag
 
     // FIXME: these need to go row-by-row and find the biggest / smallest x or y value on that row; this won't work for an irregular map
     val leftEdge get() = getOffsetLine(minOffsetX, null)
-    val topEdge get() = getOffsetLine(null, minOfsetY)
+    val bottomEdge get() = getOffsetLine(null, minOfsetY)
     val rightEdge get() = getOffsetLine(maxOffsetX, null)
-    val bottomEdge get() = getOffsetLine(null, maxOffsetY)
+    val topEdge get() = getOffsetLine(null, maxOffsetY)
 
     var leftMovableEdge = calculateMovableEdge(leftEdge)
         private set
