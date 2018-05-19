@@ -22,8 +22,10 @@ class HexagonalMap(val layout: HexagonalLayout, tiles: Map<CubeCoordinate, Hexag
 
     val orientation get() = layout.orientation
     val position get() = layout.position
-    val tileSize get() = layout.tileSize
+
     val tileCount get() = tiles.size
+    val tileSize = layout.tileSize
+    val packedTileSize = layout.packedTileSize
 
     val minOffsetX = getOffsetLocations().minBy { it.x }?.x ?: 0
     val minOfsetY = getOffsetLocations().minBy { it.y }?.y ?: 0
@@ -35,8 +37,9 @@ class HexagonalMap(val layout: HexagonalLayout, tiles: Map<CubeCoordinate, Hexag
     val aspectRatio get() = width.toFloat() / height.toFloat()
     val size get() = GridPoint2(width, height)
 
-    val worldWidth get() = width * tileSize.x
-    val worldHeight get() = height * tileSize.y
+    val worldWidth get() = width * packedTileSize.x
+    val worldHeight get() = height * packedTileSize.y
+    val worldAspectRatio get() = worldWidth / worldHeight
     val worldSize get() = Vector2(worldWidth, worldHeight)
 
     val rows: List<List<CubeCoordinate>> get() = getOffsetLocations().groupBy { it.y }.map { it.value.map { it.toCubeCoordinate() } }

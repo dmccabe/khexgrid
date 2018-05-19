@@ -1,5 +1,6 @@
 package com.darkgravity.khexgrid.map
 
+import com.badlogic.gdx.math.Vector2
 import com.darkgravity.khexgrid.math.CubeCoordinate
 import com.darkgravity.khexgrid.math.Matrix2
 import kotlin.math.sqrt
@@ -7,13 +8,16 @@ import kotlin.math.sqrt
 /**
  * @author Dan McCabe
  */
-sealed class HexagonalOrientation(val forward: Matrix2, val backward: Matrix2, val startAngle: Float) {
+sealed class HexagonalOrientation(val forward: Matrix2, val backward: Matrix2, val startAngle: Float,
+                                  val sizeMultiplier: Vector2, val packedMultiplier: Vector2) {
     abstract val id: String
 
     object PointyTop : HexagonalOrientation(
-        Matrix2(sqrt(3.0).toFloat(), sqrt(3.0).toFloat() / 2.0f, 0.0f, 3.0f / 2.0f),
-        Matrix2(sqrt(3.0).toFloat() / 3.0f, -1.0f / 3.0f, 0.0f, 2.0f / 3.0f),
-        0.5f
+        forward = Matrix2(sqrt(3f), sqrt(3f) / 2.0f, 0.0f, 3.0f / 2.0f),
+        backward = Matrix2(sqrt(3f) / 3.0f, -1.0f / 3.0f, 0.0f, 2.0f / 3.0f),
+        startAngle = 0.5f,
+        sizeMultiplier = Vector2(sqrt(3f), 2f),
+        packedMultiplier = Vector2(1f, 3f / 4f)
     ) {
         override val id = "pointy-top"
         val DIRECTION_NE = CubeCoordinate.DIRECTIONS[0]
@@ -32,9 +36,11 @@ sealed class HexagonalOrientation(val forward: Matrix2, val backward: Matrix2, v
     }
 
     object FlatTop : HexagonalOrientation(
-        Matrix2(3.0f / 2.0f, 0.0f, sqrt(3.0).toFloat() / 2.0f, sqrt(3.0).toFloat()),
-        Matrix2(2.0f / 3.0f, 0.0f, -1.0f / 3.0f, sqrt(3.0).toFloat() / 3.0f),
-        0.0f
+        forward = Matrix2(3.0f / 2.0f, 0.0f, sqrt(3f) / 2.0f, sqrt(3f)),
+        backward = Matrix2(2.0f / 3.0f, 0.0f, -1.0f / 3.0f, sqrt(3f) / 3.0f),
+        startAngle = 0.0f,
+        sizeMultiplier = Vector2(2f, sqrt(3f)),
+        packedMultiplier = Vector2(1f, 3f / 4f)
     ) {
         override val id = "flat-top"
         val DIRECTION_NE = CubeCoordinate.DIRECTIONS[0]

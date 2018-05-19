@@ -11,14 +11,24 @@ import kotlin.math.sin
 /**
  * @author Dan McCabe
  */
-class HexagonalLayout(val orientation: HexagonalOrientation, val position: Vector2, val tileSize: Vector2) {
+class HexagonalLayout(val orientation: HexagonalOrientation, val position: Vector2, private val tileRadius: Vector2) {
+
+    /**
+     * Represents the size of a single hexagon in pixels
+     */
+    val tileSize: Vector2 = tileRadius * orientation.sizeMultiplier
+
+    /**
+     * Represents the distance between two hexagonal centers when packed in a grid
+     */
+    val packedTileSize: Vector2 = tileSize * orientation.packedMultiplier
 
     fun resize(size: Vector2): HexagonalLayout = HexagonalLayout(orientation, position, size)
 
     fun toPixel(coordinate: CubeCoordinate): GridPoint2 = toVector(coordinate).toGridPoint2()
 
     fun toHex(pixel: GridPoint2): CubeCoordinate {
-        val location = orientation.backward * ((pixel - position) / tileSize)
+        val location = orientation.backward * ((pixel - position) / tileRadius)
         return Vector3(location.x, location.y, -location.x - location.y).toCubeCoordinate()
     }
 
@@ -38,10 +48,10 @@ class HexagonalLayout(val orientation: HexagonalOrientation, val position: Vecto
     }
 
     private fun toVector(coordinate: CubeCoordinate): Vector2 =
-        position + (orientation.forward * coordinate.toVector2()) * tileSize
+        position + (orientation.forward * coordinate.toVector2()) * tileRadius
 
     private fun cornerOffset(corner: Int): Vector2 {
         val angle = 2.0 * PI * (corner + orientation.startAngle).toDouble() / 6.0
-        return Vector2(cos(angle).toFloat(), sin(angle).toFloat()) * tileSize
+        return Vector2(cos(angle).toFloat(), sin(angle).toFloat()) * tileRadius
     }
 }
