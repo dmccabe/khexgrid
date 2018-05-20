@@ -7,9 +7,14 @@ import com.darkgravity.khexgrid.map.HexagonalTile
 /**
  * @author Dan McCabe
  */
-class TileOutlineLayer(private val hexagonalRenderer: HexagonalRenderer, shapeRenderer: ShapeRenderer) : ShapeRendererLayer(shapeRenderer) {
-    override fun render(batch: PolygonSpriteBatch, tiles: Collection<HexagonalTile>) =
-        tiles.forEach {
+class TileOutlineLayer(private val hexagonalRenderer: HexagonalRenderer, shapeRenderer: ShapeRenderer,
+                       private val filterBlock: ((HexagonalTile) -> Boolean)? = null)
+    : ShapeRendererLayer(shapeRenderer) {
+
+    override fun render(batch: PolygonSpriteBatch, tiles: Collection<HexagonalTile>) {
+        val drawTiles = if (filterBlock != null) tiles.filter(filterBlock) else tiles
+        drawTiles.forEach {
             hexagonalRenderer.renderOutline(shapeRenderer, it.location, 5f)
         }
+    }
 }
