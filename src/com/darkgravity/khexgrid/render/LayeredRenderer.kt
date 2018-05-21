@@ -7,6 +7,7 @@ import com.darkgravity.khexgrid.map.HexagonalMap
 import com.darkgravity.khexgrid.map.HexagonalTile
 import com.darkgravity.khexgrid.math.div
 import com.darkgravity.khexgrid.math.minus
+import com.darkgravity.khexgrid.math.times
 import com.darkgravity.khexgrid.math.toVector2
 
 /**
@@ -23,7 +24,8 @@ class LayeredRenderer(private val map: HexagonalMap, private val layers: List<La
     }
 
     private fun cullTiles(tiles: Collection<HexagonalTile>, cullingArea: Rectangle): Collection<HexagonalTile> {
-        val tileSize = map.tileSize
+        // adding extra buffer around tile size to make drawing smooth while panning camera
+        val tileSize = map.tileSize * 5f
         val halfTileSize = tileSize / 2f
         val area = Rectangle(0f, 0f, tileSize.x, tileSize.y)
         return tiles.filter {
