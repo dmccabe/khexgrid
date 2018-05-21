@@ -2,6 +2,8 @@ package com.darkgravity.khexgrid.map
 
 import com.badlogic.gdx.math.GridPoint2
 import com.badlogic.gdx.math.Vector2
+import com.darkgravity.khexgrid.delegate.CacheContainer
+import com.darkgravity.khexgrid.delegate.cache
 import com.darkgravity.khexgrid.math.CubeCoordinate
 import com.darkgravity.khexgrid.math.OffsetCoordinateType
 import com.darkgravity.khexgrid.observer.Observable
@@ -13,29 +15,25 @@ import com.darkgravity.khexgrid.observer.ObservableSubject
 class HexagonalMap(val layout: HexagonalLayout, tiles: Map<CubeCoordinate, HexagonalTile>) :
     Observable<HexagonalMapListener> by ObservableSubject() {
 
-    val mutableTiles = tiles.toMutableMap()
+    private val mutableTiles = tiles.toMutableMap()
     val tiles: Map<CubeCoordinate, HexagonalTile> = mutableTiles
-
-    var movableTiles: Map<CubeCoordinate, HexagonalTile> = calculateMovableTiles()
-        private set
-    val movableLocations get() = this.movableTiles.keys.toList()
 
     val orientation get() = layout.orientation
     val position get() = layout.position
 
     val tileCount get() = tiles.size
-    val tileSize = layout.tileSize
-    val packedTileSize = layout.packedTileSize
+    val tileSize get() = layout.tileSize
+    val packedTileSize get() = layout.packedTileSize
 
-    val minOffsetX = getOffsetLocations().minBy { it.x }?.x ?: 0
-    val minOfsetY = getOffsetLocations().minBy { it.y }?.y ?: 0
-    val maxOffsetX = getOffsetLocations().maxBy { it.x }?.x ?: 0
-    val maxOffsetY = getOffsetLocations().maxBy { it.y }?.y ?: 0
+    val minOffsetX: Int by lazy { getOffsetLocations().minBy { it.x }?.x ?: 0 }
+    val minOfsetY: Int by lazy { getOffsetLocations().minBy { it.y }?.y ?: 0 }
+    val maxOffsetX: Int by lazy { getOffsetLocations().maxBy { it.x }?.x ?: 0 }
+    val maxOffsetY: Int by lazy { getOffsetLocations().maxBy { it.y }?.y ?: 0 }
 
-    val width get() = maxOffsetX - minOffsetX + 1
-    val height get() = maxOffsetY - minOfsetY + 1
-    val aspectRatio get() = width.toFloat() / height.toFloat()
-    val size get() = GridPoint2(width, height)
+    val width: Int get() = maxOffsetX - minOffsetX + 1
+    val height: Int get() = maxOffsetY - minOfsetY + 1
+    val aspectRatio: Float get() = width.toFloat() / height.toFloat()
+    val size: GridPoint2 get() = GridPoint2(width, height)
 
     val worldWidth get() = width * packedTileSize.x
     val worldHeight get() = height * packedTileSize.y
@@ -50,29 +48,20 @@ class HexagonalMap(val layout: HexagonalLayout, tiles: Map<CubeCoordinate, Hexag
     val rightEdge: List<CubeCoordinate> get() = rows.map { locations -> checkNotNull(locations.maxBy { it.x }) }
     val topEdge: List<CubeCoordinate> get() = columns.map { locations -> checkNotNull(locations.maxBy { it.y }) }
 
-    var leftMovableEdge = calculateMovableEdge(leftEdge)
-        private set
-    var topMovableEdge = calculateMovableEdge(topEdge)
-        private set
-    var rightMovableEdge = calculateMovableEdge(rightEdge)
-        private set
-    var bottomMovableEdge = calculateMovableEdge(bottomEdge)
-        private set
-
-    init {
-        println("Has ${tiles.size} tiles, $width X $height")
-    }
+    private val movableCache = CacheContainer()
+    val movableTiles: Map<CubeCoordinate, HexagonalTile> by cache { calculateMovableTiles() }.also { movableCache += it }
+    val movableLocations: List<CubeCoordinate> get() = this.movableTiles.keys.toList()
+    val leftMovableEdge: List<CubeCoordinate> by cache { calculateMovableEdge(leftEdge) }.also { movableCache += it }
+    val topMovableEdge: List<CubeCoordinate> by cache { calculateMovableEdge(topEdge) }.also { movableCache += it }
+    val rightMovableEdge: List<CubeCoordinate> by cache { calculateMovableEdge(rightEdge) }.also { movableCache += it }
+    val bottomMovableEdge: List<CubeCoordinate> by cache { calculateMovableEdge(bottomEdge) }.also { movableCache += it }
 
     private fun calculateMovableTiles() = tiles.filterNot { it.value.isMoveObstacle }
 
     private fun calculateMovableEdge(edge: List<CubeCoordinate>) = edge.intersect(movableLocations).toList()
 
     private fun tilesChanged(locations: List<CubeCoordinate>) {
-        movableTiles = calculateMovableTiles()
-        leftMovableEdge = calculateMovableEdge(leftEdge)
-        topMovableEdge = calculateMovableEdge(topEdge)
-        rightMovableEdge = calculateMovableEdge(rightEdge)
-        bottomMovableEdge = calculateMovableEdge(bottomEdge)
+        movableCache.invalidate()
         notify { it.tilesChanged(this, locations) }
     }
 
