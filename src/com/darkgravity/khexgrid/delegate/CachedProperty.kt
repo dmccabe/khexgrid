@@ -6,7 +6,7 @@ package com.darkgravity.khexgrid.delegate
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
-class Cache<out T>(private val loader: () -> T) : ReadOnlyProperty<Any, T> {
+class CachedProperty<out T>(private val loader: () -> T) : ReadOnlyProperty<Any, T> {
     private var cachedValue: T? = null
 
     override fun getValue(thisRef: Any, property: KProperty<*>): T =
@@ -17,4 +17,4 @@ class Cache<out T>(private val loader: () -> T) : ReadOnlyProperty<Any, T> {
     }
 }
 
-fun <T> cache(loader: () -> T) = Cache(loader)
+fun <T> cache(loader: () -> T) = CachedProperty(loader)
