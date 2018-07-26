@@ -17,6 +17,7 @@ class HexagonalMap(val layout: HexagonalLayout, tiles: Map<CubeCoordinate, Hexag
 
     private val mutableTiles = tiles.toMutableMap()
     val tiles: Map<CubeCoordinate, HexagonalTile> = mutableTiles
+    val locations: List<CubeCoordinate> get() = tiles.keys.toList()
 
     val orientation get() = layout.orientation
     val position get() = layout.position
