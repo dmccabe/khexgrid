@@ -52,6 +52,8 @@ data class CubeCoordinate(val x: Int = 0, val y: Int = 0, val z: Int = -x - y) {
             }
         }
 
+    fun withinRange(range: IntRange): List<CubeCoordinate> = withinRange(range.last) - withinRange(range.first)
+
     fun linearInterpolation(coordinate: CubeCoordinate, percent: Float): Vector3 =
         toVector3() + (coordinate - this).toVector3() * percent
 
