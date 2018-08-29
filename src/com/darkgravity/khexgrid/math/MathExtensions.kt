@@ -159,3 +159,11 @@ operator fun Rectangle.div(scalar: Float): Rectangle = Rectangle(x / scalar, y /
 operator fun Rectangle.times(vector: Vector2): Rectangle = Rectangle(x * vector.x, y * vector.y, width * vector.x, height * vector.y)
 
 operator fun Rectangle.div(vector: Vector2): Rectangle = Rectangle(x / vector.x, y / vector.y, width / vector.x, height / vector.y)
+
+fun List<Vector2>.calculateBounds(): Rectangle {
+    val minX = minBy { it.x }?.x ?: 0f
+    val minY = minBy { it.y }?.y ?: 0f
+    val maxX = maxBy { it.x }?.x ?: 0f
+    val maxY = maxBy { it.y }?.y ?: 0f
+    return Rectangle(minX, minY, maxX - minX, maxY - minY)
+}
