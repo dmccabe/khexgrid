@@ -59,7 +59,7 @@ data class CubeCoordinate(val x: Int = 0, val y: Int = 0, val z: Int = -x - y) {
 
     fun lineTo(coordinate: CubeCoordinate): List<CubeCoordinate> = lineToLimit(coordinate)
 
-    fun lineToPluck(coordinate: CubeCoordinate, limit: Int): CubeCoordinate = lineToLimit(coordinate, limit).last()
+    fun lineToPluck(coordinate: CubeCoordinate, index: Int): CubeCoordinate = lineToLimit(coordinate, index).last()
 
     private fun lineToLimit(coordinate: CubeCoordinate, limit: Int = distance(coordinate)): List<CubeCoordinate> {
         val distance = distance(coordinate)
