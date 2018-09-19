@@ -57,13 +57,14 @@ data class CubeCoordinate(val x: Int = 0, val y: Int = 0, val z: Int = -x - y) {
     fun linearInterpolation(coordinate: CubeCoordinate, percent: Float): Vector3 =
         toVector3() + (coordinate - this).toVector3() * percent
 
-    fun lineTo(coordinate: CubeCoordinate): List<CubeCoordinate> = lineToDistance(coordinate, distance(coordinate))
+    fun lineTo(coordinate: CubeCoordinate): List<CubeCoordinate> = lineToDistance(coordinate)
 
-    fun lineToPluck(coordinate: CubeCoordinate, distance: Int): CubeCoordinate = lineToDistance(coordinate, distance).last()
+    fun lineToPluck(coordinate: CubeCoordinate, limit: Int): CubeCoordinate = lineToDistance(coordinate, limit).last()
 
-    private fun lineToDistance(coordinate: CubeCoordinate, distance: Int): List<CubeCoordinate> {
-        return if (distance > 0) {
-            (0..distance).map { linearInterpolation(coordinate, it / distance.toFloat()).toCubeCoordinate() }
+    private fun lineToDistance(coordinate: CubeCoordinate, limit: Int = distance(coordinate)): List<CubeCoordinate> {
+        val distance = distance(coordinate)
+        return if (limit > 0) {
+            (0..limit).map { linearInterpolation(coordinate, it / distance.toFloat()).toCubeCoordinate() }
         } else {
             listOf()
         }
