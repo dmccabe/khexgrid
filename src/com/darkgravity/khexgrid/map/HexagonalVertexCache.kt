@@ -10,7 +10,7 @@ class HexagonalVertexCache(private val map: HexagonalMap) {
 
     operator fun get(tile: HexagonalTile) = this[tile.location]
 
-    operator fun get(coordinate: CubeCoordinate) = locationVertices.getOrPut(coordinate, { CachedEntry(map.polygonVertices(coordinate))} )
+    operator fun get(coordinate: CubeCoordinate) = locationVertices.getOrPut(coordinate) { CachedEntry(map.polygonVertices(coordinate))}
 
     class CachedEntry(val vertices: FloatArray) {
         private val xCoordinates = vertices.filterIndexed { index, _ -> index % 2 == 0 }
