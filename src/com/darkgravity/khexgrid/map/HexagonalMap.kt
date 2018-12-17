@@ -106,10 +106,6 @@ class HexagonalMap(val layout: HexagonalLayout, tiles: Map<CubeCoordinate, Hexag
 
     fun getTerrain(coordinate: CubeCoordinate): Terrain? = tiles[coordinate]?.terrain
 
-    fun getReachableLocations(movable: Movable): List<CubeCoordinate> = getReachableLocations(movable, movable.movementRange)
-
-    fun getReachableLocations(movable: Movable, range: Int): List<CubeCoordinate> = getReachableLocations(movable.location, range)
-
     fun getReachableLocations(coordinate: CubeCoordinate, range: Int): List<CubeCoordinate> =
         tiles[coordinate]?.let { source -> getReachableTiles(source, range).map { it.location } } ?: listOf()
 
@@ -127,9 +123,6 @@ class HexagonalMap(val layout: HexagonalLayout, tiles: Map<CubeCoordinate, Hexag
         }
         return reachable.keys.toList()
     }
-
-    fun getVisibleLocations(visibilityLocation: VisibilityLocation): List<CubeCoordinate> =
-        getVisibleLocations(visibilityLocation.location, visibilityLocation.visibleRange)
 
     fun getVisibleLocations(coordinate: CubeCoordinate, range: Int): List<CubeCoordinate> =
         tiles[coordinate]?.let { source -> getVisibleTiles(source, range).map { it.location } } ?: listOf()
