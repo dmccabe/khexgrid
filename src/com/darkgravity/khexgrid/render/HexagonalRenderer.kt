@@ -24,6 +24,8 @@ class HexagonalRenderer(map: HexagonalMap, private val hexagonSpriteSize: Vector
         }
     }
 
+    fun getVertexEntry(location: CubeCoordinate): HexagonalVertexCache.CachedEntry = cache[location]
+
     fun renderTexture(batch: PolygonSpriteBatch, texture: Texture, location: CubeCoordinate) =
         renderTexture(batch, TextureRegion(texture), location)
 
