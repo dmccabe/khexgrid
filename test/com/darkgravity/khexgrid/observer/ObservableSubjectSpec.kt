@@ -2,15 +2,14 @@ package com.darkgravity.khexgrid.observer
 
 import com.natpryce.hamkrest.assertion.assert
 import com.natpryce.hamkrest.equalTo
-import org.jetbrains.spek.api.dsl.describe
-import org.jetbrains.spek.api.dsl.it
-import org.jetbrains.spek.subject.SubjectSpek
+import org.spekframework.spek2.Spek
+import org.spekframework.spek2.style.specification.describe
 
 /**
  * @author Dan McCabe
  */
-object ObservableSubjectSpec : SubjectSpek<ObservableSubject<TestListener>>( {
-    subject { ObservableSubject() }
+object ObservableSubjectSpec : Spek( {
+    val subject by memoized { ObservableSubject<TestListener>() }
     fun notify() = subject.notify { it.eventFired() }
 
     val listener = TestListener()

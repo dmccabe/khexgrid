@@ -7,16 +7,14 @@ import com.natpryce.hamkrest.assertion.assert
 import com.natpryce.hamkrest.equalTo
 import com.natpryce.hamkrest.isIn
 import com.natpryce.hamkrest.throws
-import org.jetbrains.spek.api.dsl.describe
-import org.jetbrains.spek.api.dsl.it
-import org.jetbrains.spek.api.dsl.on
-import org.jetbrains.spek.subject.SubjectSpek
+import org.spekframework.spek2.Spek
+import org.spekframework.spek2.style.specification.describe
 
 /**
  * @author Dan McCabe
  */
-object CubeCoordinateSpec : SubjectSpek<CubeCoordinate>( {
-    subject { CubeCoordinate(2, 5, -7) }
+object CubeCoordinateSpec : Spek( {
+    val subject by memoized { CubeCoordinate(2, 5, -7) }
     val modifier = CubeCoordinate(3, 4, -7)
 
     describe("CubeCoordinate") {
@@ -128,8 +126,10 @@ object CubeCoordinateSpec : SubjectSpek<CubeCoordinate>( {
             it("returns itself for radius 0") {
                 assert.that(subject.ring(0), equalTo(listOf(subject)))
             }
-            on("radius 1 with default start direction") {
-                val result = subject.ring(1)
+            context("radius 1 with default start direction") {
+                lateinit var result: List<CubeCoordinate>
+                beforeGroup { result = subject.ring(1) }
+
                 it("returns all neighbors for radius 1") {
                     assert.that(result, allElements(isIn(subject.neighbors())))
                 }
@@ -138,8 +138,10 @@ object CubeCoordinateSpec : SubjectSpek<CubeCoordinate>( {
                     assert.that(result, equalTo(neighbors.subList(4, neighbors.size) + neighbors.subList(0, 4)))
                 }
             }
-            on("radius 1 with start direction of 2") {
-                val result = subject.ring(1, 2)
+            context("radius 1 with start direction of 2") {
+                lateinit var result: List<CubeCoordinate>
+                beforeGroup { result = subject.ring(1, 2) }
+
                 it("returns all neighbors for radius 1") {
                     assert.that(result, allElements(isIn(subject.neighbors())))
                 }
@@ -148,8 +150,10 @@ object CubeCoordinateSpec : SubjectSpek<CubeCoordinate>( {
                     assert.that(result, equalTo(neighbors.subList(2, neighbors.size) + neighbors.subList(0, 2)))
                 }
             }
-            on("radius 2 with default start direction") {
-                val result = subject.ring(2)
+            context("radius 2 with default start direction") {
+                lateinit var result: List<CubeCoordinate>
+                beforeGroup { result = subject.ring(2) }
+
                 it("returns ring in correct order") {
                     assert.that(result, equalTo(listOf(
                         CubeCoordinate(0, 7, -7), CubeCoordinate(1, 7, -8), CubeCoordinate(2, 7, -9),

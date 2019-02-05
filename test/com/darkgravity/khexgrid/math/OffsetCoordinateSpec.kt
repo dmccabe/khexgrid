@@ -2,9 +2,8 @@ package com.darkgravity.khexgrid.math
 
 import com.natpryce.hamkrest.assertion.assert
 import com.natpryce.hamkrest.equalTo
-import org.jetbrains.spek.api.Spek
-import org.jetbrains.spek.api.dsl.describe
-import org.jetbrains.spek.api.dsl.it
+import org.spekframework.spek2.Spek
+import org.spekframework.spek2.style.specification.describe
 
 /**
  * @author Dan McCabe
