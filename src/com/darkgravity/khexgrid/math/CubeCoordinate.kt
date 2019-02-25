@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.math.Vector3
 import com.darkgravity.khexgrid.map.HexagonalOrientation.FlatTop
 import com.darkgravity.khexgrid.map.HexagonalOrientation.PointyTop
+import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -41,7 +42,7 @@ data class CubeCoordinate(val x: Int = 0, val y: Int = 0, val z: Int = -x - y) {
 
     fun diagonalNeighbors(): List<CubeCoordinate> = DIAGONALS.indices.map { diagonalNeighbor(it) }
 
-    fun length(): Int = ((x.abs() + y.abs() + z.abs()) / 2f).roundToInt()
+    fun length(): Int = ((abs(x) + abs(y) + abs(z)) / 2f).roundToInt()
 
     fun distance(coordinate: CubeCoordinate): Int = subtract(coordinate).length()
 

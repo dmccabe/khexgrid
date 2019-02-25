@@ -1,6 +1,9 @@
 package com.darkgravity.khexgrid.math
 
-import com.badlogic.gdx.math.*
+import com.badlogic.gdx.math.GridPoint2
+import com.badlogic.gdx.math.GridPoint3
+import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.math.Vector3
 import com.natpryce.hamkrest.assertion.assert
 import com.natpryce.hamkrest.equalTo
 import com.natpryce.hamkrest.throws
@@ -685,34 +688,6 @@ object MathExtensionsSpec : Spek( {
         describe(".toVector2") {
             it("copies values correctly") {
                 assert.that(vector.toVector2(), equalTo(Vector2(2f, 3f)))
-            }
-        }
-    }
-
-    describe("Rectangle") {
-        val rect = Rectangle(2f, 3f, 10f, 20f)
-
-        describe(".minX") {
-            it("returns x value") {
-                assert.that(rect.minX, equalTo(2f))
-            }
-        }
-
-        describe(".minY") {
-            it("returns y value") {
-                assert.that(rect.minY, equalTo(3f))
-            }
-        }
-
-        describe(".maxX") {
-            it("returns value of x + width") {
-                assert.that(rect.maxX, equalTo(12f))
-            }
-        }
-
-        describe(".maxY") {
-            it("returns value of y + height") {
-                assert.that(rect.maxY, equalTo(23f))
             }
         }
     }
