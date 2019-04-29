@@ -20,7 +20,7 @@ class TilePositionLayer(private val map: HexagonalMap, private val font: BitmapF
         coordinate to Vector2(pixel.x - layout.width / 2, pixel.y + layout.height / 2)
     }
 
-    override fun render(batch: PolygonSpriteBatch, tiles: Collection<HexagonalTile>) {
+    override fun handleRender(batch: PolygonSpriteBatch, tiles: Collection<HexagonalTile>) {
         tiles.forEach {
             val position = textPositions[it.location] ?: Vector2()
             font.draw(batch, coordinateText(it.location), position.x, position.y)

@@ -11,7 +11,7 @@ class TileOutlineLayer(private val hexagonalRenderer: HexagonalRenderer, shapeRe
                        private val filterBlock: ((HexagonalTile) -> Boolean)? = null)
     : ShapeRendererLayer(shapeRenderer) {
 
-    override fun render(batch: PolygonSpriteBatch, tiles: Collection<HexagonalTile>) {
+    override fun handleRender(batch: PolygonSpriteBatch, tiles: Collection<HexagonalTile>) {
         val drawTiles = if (filterBlock != null) tiles.filter(filterBlock) else tiles
         drawTiles.forEach {
             hexagonalRenderer.renderOutline(shapeRenderer, it.location, 5f)

@@ -18,9 +18,7 @@ class LayeredRenderer(private val map: HexagonalMap, private val layers: List<La
     private var culledTiles: Collection<HexagonalTile> = cullTiles(map.tiles.values, camera.viewArea)
 
     fun render(batch: PolygonSpriteBatch) {
-        layers.forEach { layer ->
-            layer.use(batch) { layer.render(batch, culledTiles) }
-        }
+        layers.forEach { it.render(batch, culledTiles) }
     }
 
     private fun cullTiles(tiles: Collection<HexagonalTile>, cullingArea: Rectangle): Collection<HexagonalTile> {

@@ -6,12 +6,12 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 /**
  * @author Dan McCabe
  */
-open class ShapeRendererLayer(val shapeRenderer: ShapeRenderer) : LayerAdapter() {
-    override fun begin(batch: PolygonSpriteBatch) {
+abstract class ShapeRendererLayer(val shapeRenderer: ShapeRenderer) : LayerAdapter() {
+    override fun preRender(batch: PolygonSpriteBatch) {
         shapeRenderer.projectionMatrix = batch.projectionMatrix
         shapeRenderer.updateMatrices()
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled)
     }
 
-    override fun end(batch: PolygonSpriteBatch) = shapeRenderer.end()
+    override fun postRender(batch: PolygonSpriteBatch) = shapeRenderer.end()
 }
