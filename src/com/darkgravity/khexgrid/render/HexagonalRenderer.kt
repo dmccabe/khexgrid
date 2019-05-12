@@ -3,10 +3,13 @@ package com.darkgravity.khexgrid.render
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.*
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.darkgravity.khexgrid.map.HexagonalMap
 import com.darkgravity.khexgrid.map.HexagonalVertexCache
 import com.darkgravity.khexgrid.math.CubeCoordinate
+import com.darkgravity.khexgrid.math.ceilToInt
+import kotlin.math.roundToInt
 
 /**
  * @author Dan McCabe
@@ -66,7 +69,12 @@ class HexagonalRenderer(map: HexagonalMap, private val hexagonSpriteSize: Vector
             val y1 = vertices[i + 1]
             val x2 = if (isLast) vertices[0] else vertices[i + 2]
             val y2 = if (isLast) vertices[1] else vertices[i + 3]
-            renderer.rectLine(x1, y1, x2, y2, thickness)
+
+            val angle = MathUtils.atan2(y2 - y1, x2 - x1)
+            val xAdjust = (MathUtils.cos(angle) * thickness / 4f).ceilToInt()
+            val yAdjust = (MathUtils.sin(angle) * thickness / 4f).ceilToInt()
+
+            renderer.rectLine(x1 - xAdjust, y1 - yAdjust, x2 + xAdjust, y2 + yAdjust, thickness)
             i += 2
         }
     }

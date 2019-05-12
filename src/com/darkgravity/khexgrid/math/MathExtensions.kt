@@ -1,11 +1,15 @@
 package com.darkgravity.khexgrid.math
 
-import com.badlogic.gdx.math.GridPoint2
-import com.badlogic.gdx.math.GridPoint3
-import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.math.Vector3
+import com.badlogic.gdx.math.*
 import kotlin.math.abs
 import kotlin.math.roundToInt
+
+fun Float.abs(): Float = abs(this)
+fun Float.floor(): Float = kotlin.math.floor(this)
+fun Float.floorToInt(): Int = MathUtils.floor(this)
+fun Float.round(): Float = kotlin.math.round(this)
+fun Float.ceil(): Float = kotlin.math.ceil(this)
+fun Float.ceilToInt(): Int = MathUtils.ceil(this)
 
 operator fun GridPoint2.plus(vector: Vector2): Vector2 = Vector2(x + vector.x, y + vector.y)
 operator fun GridPoint2.minus(vector: Vector2): Vector2 = Vector2(x - vector.x, y - vector.y)
