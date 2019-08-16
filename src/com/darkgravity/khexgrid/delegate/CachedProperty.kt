@@ -17,4 +17,4 @@ class CachedProperty<out T>(private val loader: () -> T) : ReadOnlyProperty<Any,
     }
 }
 
-fun <T> cache(loader: () -> T) = CachedProperty(loader)
+fun <T> cache(registry: CacheRegistry, loader: () -> T) = CachedProperty(loader).also { registry += it }

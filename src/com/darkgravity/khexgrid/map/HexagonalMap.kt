@@ -2,7 +2,7 @@ package com.darkgravity.khexgrid.map
 
 import com.badlogic.gdx.math.GridPoint2
 import com.badlogic.gdx.math.Vector2
-import com.darkgravity.khexgrid.delegate.CacheContainer
+import com.darkgravity.khexgrid.delegate.CacheRegistry
 import com.darkgravity.khexgrid.delegate.cache
 import com.darkgravity.khexgrid.math.CubeCoordinate
 import com.darkgravity.khexgrid.math.OffsetCoordinateType
@@ -49,13 +49,13 @@ class HexagonalMap(val layout: HexagonalLayout, tiles: Map<CubeCoordinate, Hexag
     val rightEdge: List<CubeCoordinate> get() = rows.map { locations -> checkNotNull(locations.maxBy { it.x }) }
     val topEdge: List<CubeCoordinate> get() = columns.map { locations -> checkNotNull(locations.maxBy { it.y }) }
 
-    private val movableCache = CacheContainer()
-    val movableTiles: Map<CubeCoordinate, HexagonalTile> by cache { calculateMovableTiles() }.also { movableCache += it }
+    private val movableCache = CacheRegistry()
+    val movableTiles: Map<CubeCoordinate, HexagonalTile> by cache(movableCache) { calculateMovableTiles() }
     val movableLocations: List<CubeCoordinate> get() = this.movableTiles.keys.toList()
-    val leftMovableEdge: List<CubeCoordinate> by cache { calculateMovableEdge(leftEdge) }.also { movableCache += it }
-    val topMovableEdge: List<CubeCoordinate> by cache { calculateMovableEdge(topEdge) }.also { movableCache += it }
-    val rightMovableEdge: List<CubeCoordinate> by cache { calculateMovableEdge(rightEdge) }.also { movableCache += it }
-    val bottomMovableEdge: List<CubeCoordinate> by cache { calculateMovableEdge(bottomEdge) }.also { movableCache += it }
+    val leftMovableEdge: List<CubeCoordinate> by cache(movableCache) { calculateMovableEdge(leftEdge) }
+    val topMovableEdge: List<CubeCoordinate> by cache(movableCache) { calculateMovableEdge(topEdge) }
+    val rightMovableEdge: List<CubeCoordinate> by cache(movableCache) { calculateMovableEdge(rightEdge) }
+    val bottomMovableEdge: List<CubeCoordinate> by cache(movableCache) { calculateMovableEdge(bottomEdge) }
 
     private fun calculateMovableTiles() = tiles.filterNot { it.value.isMoveObstacle }
 

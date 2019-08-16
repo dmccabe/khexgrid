@@ -3,7 +3,7 @@ package com.darkgravity.khexgrid.delegate
 /**
  * @author Dan McCabe
  */
-class CacheContainer {
+class CacheRegistry {
     private val caches = mutableSetOf<CachedProperty<*>>()
 
     fun add(cache: CachedProperty<*>) {
