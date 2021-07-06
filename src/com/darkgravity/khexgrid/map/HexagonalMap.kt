@@ -26,10 +26,10 @@ class HexagonalMap(val layout: HexagonalLayout, tiles: Map<CubeCoordinate, Hexag
     val tileSize get() = layout.tileSize
     val packedTileSize get() = layout.packedTileSize
 
-    val minOffsetX: Int by lazy { getOffsetLocations().minBy { it.x }?.x ?: 0 }
-    val minOfsetY: Int by lazy { getOffsetLocations().minBy { it.y }?.y ?: 0 }
-    val maxOffsetX: Int by lazy { getOffsetLocations().maxBy { it.x }?.x ?: 0 }
-    val maxOffsetY: Int by lazy { getOffsetLocations().maxBy { it.y }?.y ?: 0 }
+    val minOffsetX: Int by lazy { getOffsetLocations().minByOrNull { it.x }?.x ?: 0 }
+    val minOfsetY: Int by lazy { getOffsetLocations().minByOrNull { it.y }?.y ?: 0 }
+    val maxOffsetX: Int by lazy { getOffsetLocations().maxByOrNull { it.x }?.x ?: 0 }
+    val maxOffsetY: Int by lazy { getOffsetLocations().maxByOrNull { it.y }?.y ?: 0 }
 
     val width: Int get() = maxOffsetX - minOffsetX + 1
     val height: Int get() = maxOffsetY - minOfsetY + 1
@@ -44,10 +44,10 @@ class HexagonalMap(val layout: HexagonalLayout, tiles: Map<CubeCoordinate, Hexag
     val rows: List<List<CubeCoordinate>> get() = getOffsetLocations().groupBy { it.y }.map { it.value.map { it.toCubeCoordinate() } }
     val columns: List<List<CubeCoordinate>> get() = getOffsetLocations().groupBy { it.x }.map { it.value.map { it.toCubeCoordinate() } }
 
-    val leftEdge: List<CubeCoordinate> get() = rows.map { locations -> checkNotNull(locations.minBy { it.x }) }
-    val bottomEdge: List<CubeCoordinate> get() = columns.map { locations -> checkNotNull(locations.minBy { it.y }) }
-    val rightEdge: List<CubeCoordinate> get() = rows.map { locations -> checkNotNull(locations.maxBy { it.x }) }
-    val topEdge: List<CubeCoordinate> get() = columns.map { locations -> checkNotNull(locations.maxBy { it.y }) }
+    val leftEdge: List<CubeCoordinate> get() = rows.map { locations -> checkNotNull(locations.minByOrNull { it.x }) }
+    val bottomEdge: List<CubeCoordinate> get() = columns.map { locations -> checkNotNull(locations.minByOrNull { it.y }) }
+    val rightEdge: List<CubeCoordinate> get() = rows.map { locations -> checkNotNull(locations.maxByOrNull { it.x }) }
+    val topEdge: List<CubeCoordinate> get() = columns.map { locations -> checkNotNull(locations.maxByOrNull { it.y }) }
 
     private val movableCache = CacheRegistry()
     val movableTiles: Map<CubeCoordinate, HexagonalTile> by cache(movableCache) { calculateMovableTiles() }

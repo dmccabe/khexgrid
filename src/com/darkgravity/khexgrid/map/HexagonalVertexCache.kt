@@ -16,10 +16,10 @@ class HexagonalVertexCache(private val map: HexagonalMap) {
         private val xCoordinates = vertices.filterIndexed { index, _ -> index % 2 == 0 }
         private val yCoordinates = vertices.filterIndexed { index, _ -> index % 2 == 1 }
 
-        val minX = xCoordinates.min() ?: 0f
-        val minY = yCoordinates.min() ?: 0f
-        val maxX = xCoordinates.max() ?: 0f
-        val maxY = yCoordinates.max() ?: 0f
+        val minX = xCoordinates.minOrNull() ?: 0f
+        val minY = yCoordinates.minOrNull() ?: 0f
+        val maxX = xCoordinates.maxOrNull() ?: 0f
+        val maxY = yCoordinates.maxOrNull() ?: 0f
         val width = maxX - minX
         val height = maxY - minY
         val midX = minX + width / 2f
