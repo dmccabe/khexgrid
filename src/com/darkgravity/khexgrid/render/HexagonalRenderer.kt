@@ -20,8 +20,8 @@ class HexagonalRenderer(map: HexagonalMap, private val hexagonSpriteSize: Vector
     private val cache = HexagonalVertexCache(map)
 
     init {
-        val minX = drawVertices.filterIndexed { index: Int, _: Float -> index % 2 == 0 }.min() ?: 0f
-        val minY = drawVertices.filterIndexed { index: Int, _: Float -> index % 2 == 1 }.min() ?: 0f
+        val minX = drawVertices.filterIndexed { index: Int, _: Float -> index % 2 == 0 }.minOrNull() ?: 0f
+        val minY = drawVertices.filterIndexed { index: Int, _: Float -> index % 2 == 1 }.minOrNull() ?: 0f
         for (i in drawVertices.indices) {
             drawVertices[i] = drawVertices[i] - if (i % 2 == 0) minX else minY
         }
