@@ -128,7 +128,7 @@ object CubeCoordinateSpec : Spek( {
             }
             context("radius 1 with default start direction") {
                 lateinit var result: List<CubeCoordinate>
-                beforeGroup { result = subject.ring(1) }
+                beforeEachTest { result = subject.ring(1) }
 
                 it("returns all neighbors for radius 1") {
                     assert.that(result, allElements(isIn(subject.neighbors())))
@@ -140,7 +140,7 @@ object CubeCoordinateSpec : Spek( {
             }
             context("radius 1 with start direction of 2") {
                 lateinit var result: List<CubeCoordinate>
-                beforeGroup { result = subject.ring(1, 2) }
+                beforeEachTest { result = subject.ring(1, 2) }
 
                 it("returns all neighbors for radius 1") {
                     assert.that(result, allElements(isIn(subject.neighbors())))
@@ -152,7 +152,7 @@ object CubeCoordinateSpec : Spek( {
             }
             context("radius 2 with default start direction") {
                 lateinit var result: List<CubeCoordinate>
-                beforeGroup { result = subject.ring(2) }
+                beforeEachTest { result = subject.ring(2) }
 
                 it("returns ring in correct order") {
                     assert.that(result, equalTo(listOf(
