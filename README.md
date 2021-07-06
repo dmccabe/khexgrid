@@ -48,5 +48,3 @@ Draw map to screen
         TileOutlineLayer(hexRenderer, shapeRenderer)
     ), camera)
     renderer.render(batch)
-    
-More documentation to come!
