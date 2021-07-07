@@ -3,10 +3,10 @@ package com.darkgravity.khexgrid.render
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
-import com.darkgravity.khexgrid.math.div
-import com.darkgravity.khexgrid.math.minus
-import com.darkgravity.khexgrid.math.times
 import com.darkgravity.khexgrid.math.toVector2
+import ktx.math.div
+import ktx.math.minus
+import ktx.math.times
 
 /**
  * @author Dan McCabe
