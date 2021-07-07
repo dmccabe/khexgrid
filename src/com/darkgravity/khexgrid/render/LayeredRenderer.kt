@@ -5,10 +5,10 @@ import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.math.Rectangle
 import com.darkgravity.khexgrid.map.HexagonalMap
 import com.darkgravity.khexgrid.map.HexagonalTile
-import com.darkgravity.khexgrid.math.div
 import com.darkgravity.khexgrid.math.minus
-import com.darkgravity.khexgrid.math.times
 import com.darkgravity.khexgrid.math.toVector2
+import ktx.math.div
+import ktx.math.toMutable
 
 /**
  * @author Dan McCabe
@@ -27,7 +27,7 @@ class LayeredRenderer(private val map: HexagonalMap, private val layers: List<La
         val halfTileSize = tileSize / 2f
         val area = Rectangle(0f, 0f, tileSize.x, tileSize.y)
         return tiles.filter {
-            area.setPosition(map.toPixel(it.location).toVector2() - halfTileSize)
+            area.setPosition((map.toPixel(it.location).toVector2() - halfTileSize).toMutable())
             cullingArea.overlaps(area)
         }
     }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.math.Vector3
 import com.darkgravity.khexgrid.map.HexagonalOrientation.FlatTop
 import com.darkgravity.khexgrid.map.HexagonalOrientation.PointyTop
+import ktx.math.ImmutableVector2
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
@@ -104,7 +105,7 @@ data class CubeCoordinate(val x: Int = 0, val y: Int = 0, val z: Int = -x - y) {
 
     private fun adjustOffset(value: Int, isOdd: Boolean) = (value + (value and 1) * (if (isOdd) -1 else 1)) / 2
 
-    fun toVector2(): Vector2 = Vector2(x.toFloat(), y.toFloat())
+    fun toVector2(): ImmutableVector2 = ImmutableVector2(x.toFloat(), y.toFloat())
 
     fun toVector3(): Vector3 = Vector3(x.toFloat(), y.toFloat(), z.toFloat())
 

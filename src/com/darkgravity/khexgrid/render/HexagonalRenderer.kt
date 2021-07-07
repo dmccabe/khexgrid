@@ -4,17 +4,16 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.*
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.MathUtils
-import com.badlogic.gdx.math.Vector2
 import com.darkgravity.khexgrid.map.HexagonalMap
 import com.darkgravity.khexgrid.map.HexagonalVertexCache
 import com.darkgravity.khexgrid.math.CubeCoordinate
 import com.darkgravity.khexgrid.math.ceilToInt
-import kotlin.math.roundToInt
+import ktx.math.ImmutableVector2
 
 /**
  * @author Dan McCabe
  */
-class HexagonalRenderer(map: HexagonalMap, private val hexagonSpriteSize: Vector2) {
+class HexagonalRenderer(map: HexagonalMap, private val hexagonSpriteSize: ImmutableVector2) {
 
     private val drawVertices = map.polygonVertices(CubeCoordinate())
     private val cache = HexagonalVertexCache(map)

@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.GridPoint2
 import com.badlogic.gdx.math.Vector2
 import com.darkgravity.khexgrid.map.HexagonalOrientation.FlatTop
 import com.darkgravity.khexgrid.map.HexagonalOrientation.PointyTop
+import ktx.math.ImmutableVector2
 
 /**
  * @author Dan McCabe
@@ -15,7 +16,7 @@ data class OffsetCoordinate(val x: Int = 0, val y: Int = 0, val offsetType: Offs
             y - if (offsetType.orientation == FlatTop) adjustCube(x) else 0
         )
 
-    fun toVector2(): Vector2 = Vector2(x.toFloat(), y.toFloat())
+    fun toVector2(): ImmutableVector2 = ImmutableVector2(x.toFloat(), y.toFloat())
 
     operator fun plus(coordinate: OffsetCoordinate) = OffsetCoordinate(x + coordinate.x, y + coordinate.y, offsetType)
 

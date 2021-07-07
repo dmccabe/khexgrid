@@ -1,13 +1,13 @@
 package com.darkgravity.khexgrid.map
 
 import com.badlogic.gdx.math.GridPoint2
-import com.badlogic.gdx.math.Vector2
 import com.darkgravity.khexgrid.delegate.CacheRegistry
 import com.darkgravity.khexgrid.delegate.cache
 import com.darkgravity.khexgrid.math.CubeCoordinate
 import com.darkgravity.khexgrid.math.OffsetCoordinateType
 import com.darkgravity.khexgrid.observer.Observable
 import com.darkgravity.khexgrid.observer.ObservableSubject
+import ktx.math.ImmutableVector2
 
 /**
  * @author Dan McCabe
@@ -39,7 +39,7 @@ class HexagonalMap(val layout: HexagonalLayout, tiles: Map<CubeCoordinate, Hexag
     val worldWidth get() = width * packedTileSize.x
     val worldHeight get() = height * packedTileSize.y
     val worldAspectRatio get() = worldWidth / worldHeight
-    val worldSize get() = Vector2(worldWidth, worldHeight)
+    val worldSize get() = ImmutableVector2(worldWidth, worldHeight)
 
     val rows: List<List<CubeCoordinate>> get() = getOffsetLocations().groupBy { it.y }.map { it.value.map { it.toCubeCoordinate() } }
     val columns: List<List<CubeCoordinate>> get() = getOffsetLocations().groupBy { it.x }.map { it.value.map { it.toCubeCoordinate() } }
@@ -94,13 +94,13 @@ class HexagonalMap(val layout: HexagonalLayout, tiles: Map<CubeCoordinate, Hexag
         tilesChanged(coordinates)
     }
 
-    fun resizeLayout(size: Vector2): HexagonalMap = HexagonalMap(layout.resize(size), tiles)
+    fun resizeLayout(size: ImmutableVector2): HexagonalMap = HexagonalMap(layout.resize(size), tiles)
 
     fun toPixel(coordinate: CubeCoordinate): GridPoint2 = layout.toPixel(coordinate)
 
     fun toHex(pixel: GridPoint2): CubeCoordinate = layout.toHex(pixel)
 
-    fun polygonCorners(coordinate: CubeCoordinate): List<Vector2> = layout.polygonCorners(coordinate)
+    fun polygonCorners(coordinate: CubeCoordinate): List<ImmutableVector2> = layout.polygonCorners(coordinate)
 
     fun polygonVertices(coordinate: CubeCoordinate): FloatArray = layout.polygonVertices(coordinate)
 
