@@ -7,6 +7,7 @@ import com.natpryce.hamkrest.assertion.assert
 import com.natpryce.hamkrest.equalTo
 import com.natpryce.hamkrest.isIn
 import com.natpryce.hamkrest.throws
+import ktx.math.ImmutableVector2
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
 
@@ -186,7 +187,7 @@ object CubeCoordinateSpec : Spek( {
 
         describe(".toVector2") {
             it("converts the values correctly") {
-                assert.that(subject.toVector2(), equalTo(Vector2(subject.x.toFloat(), subject.y.toFloat())))
+                assert.that(subject.toVector2(), equalTo(ImmutableVector2(subject.x.toFloat(), subject.y.toFloat())))
             }
         }
 

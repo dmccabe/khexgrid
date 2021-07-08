@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2
 import com.darkgravity.khexgrid.math.CubeCoordinate
 import com.darkgravity.khexgrid.math.OffsetCoordinate
 import com.darkgravity.khexgrid.math.OffsetCoordinateType
+import ktx.math.ImmutableVector2
 
 /**
  * @author Dan McCabe
@@ -18,7 +19,7 @@ object HexagonalMapSharedContext {
                 coordinate to HexagonalTile(coordinate, terrains[column % terrains.size])
             }
         }.toMap()
-        return HexagonalMap(HexagonalLayout(orientation, Vector2(), Vector2(50f, 50f)), tiles)
+        return HexagonalMap(HexagonalLayout(orientation, ImmutableVector2.ZERO, ImmutableVector2(50f, 50f)), tiles)
     }
 }
 

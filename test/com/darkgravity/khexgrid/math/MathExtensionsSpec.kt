@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector3
 import com.natpryce.hamkrest.assertion.assert
 import com.natpryce.hamkrest.equalTo
 import com.natpryce.hamkrest.throws
+import ktx.math.ImmutableVector2
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
 
@@ -19,27 +20,27 @@ object MathExtensionsSpec : Spek( {
 
         describe(".plus") {
             it("returns same values when given identity") {
-                assert.that(point + Vector2(0f, 0f), equalTo(Vector2(2f, 3f)))
+                assert.that(point + ImmutableVector2(0f, 0f), equalTo(ImmutableVector2(2f, 3f)))
             }
 
             it("adds values when given non-identity") {
-                assert.that(point + Vector2(4f, 5f), equalTo(Vector2(6f, 8f)))
+                assert.that(point + ImmutableVector2(4f, 5f), equalTo(ImmutableVector2(6f, 8f)))
             }
         }
 
         describe(".minus") {
             it("returns same values when given identity") {
-                assert.that(point - Vector2(0f, 0f), equalTo(Vector2(2f, 3f)))
+                assert.that(point - ImmutableVector2(0f, 0f), equalTo(ImmutableVector2(2f, 3f)))
             }
 
             it("subtracts values when given non-identity") {
-                assert.that(point - Vector2(1f, 7f), equalTo(Vector2(1f, -4f)))
+                assert.that(point - ImmutableVector2(1f, 7f), equalTo(ImmutableVector2(1f, -4f)))
             }
         }
 
         describe(".toVector2") {
             it("returns equivalent Vector") {
-                assert.that(point.toVector2(), equalTo(Vector2(2f, 3f)))
+                assert.that(point.toVector2(), equalTo(ImmutableVector2(2f, 3f)))
             }
         }
     }
@@ -56,309 +57,22 @@ object MathExtensionsSpec : Spek( {
         }
     }
 
-    describe("Vector2") {
-        val vector = Vector2()
-        beforeEachTest { vector.set(2f, 3f) }
-
-        describe(".plus") {
-            context("when given identity") {
-                lateinit var result: Vector2
-                beforeEachTest { result = vector + Vector2(0f, 0f) }
-
-                it("returns same values") {
-                    assert.that(result, equalTo(vector))
-                }
-
-                it("does not modify original") {
-                    assert.that(vector, equalTo(Vector2(2f, 3f)))
-                }
-            }
-
-            context("when given non-identity") {
-                lateinit var result: Vector2
-                beforeEachTest { result = vector + Vector2(4f, 5f) }
-
-                it("returns added values") {
-                    assert.that(result, equalTo(Vector2(6f, 8f)))
-                }
-
-                it("does not modify original") {
-                    assert.that(vector, equalTo(Vector2(2f, 3f)))
-                }
-            }
-        }
-
-        describe(".minus") {
-            context("when given identity") {
-                lateinit var result: Vector2
-                beforeEachTest { result = vector - Vector2(0f, 0f) }
-
-                it("returns same values") {
-                    assert.that(result, equalTo(vector))
-                }
-
-                it("does not modify original") {
-                    assert.that(vector, equalTo(Vector2(2f, 3f)))
-                }
-            }
-
-            context("when given non-identity") {
-                lateinit var result: Vector2
-                beforeEachTest { result = vector - Vector2(1f, 7f) }
-
-                it("returns added values") {
-                    assert.that(result, equalTo(Vector2(1f, -4f)))
-                }
-
-                it("does not modify original") {
-                    assert.that(vector, equalTo(Vector2(2f, 3f)))
-                }
-            }
-        }
-
-        describe(".times") {
-            context("Number") {
-                context("when given identity") {
-                    lateinit var result: Vector2
-                    beforeEachTest { result = vector * 1f }
-
-                    it("returns same values") {
-                        assert.that(result, equalTo(vector))
-                    }
-
-                    it("does not modify original") {
-                        assert.that(vector, equalTo(Vector2(2f, 3f)))
-                    }
-                }
-
-                context("when given non-identity") {
-                    lateinit var result: Vector2
-                    beforeEachTest { result = vector * 5f }
-
-                    it("returns added values") {
-                        assert.that(result, equalTo(Vector2(10f, 15f)))
-                    }
-
-                    it("does not modify original") {
-                        assert.that(vector, equalTo(Vector2(2f, 3f)))
-                    }
-                }
-            }
-
-            context("Vector") {
-                context("when given identity") {
-                    lateinit var result: Vector2
-                    beforeEachTest { result = vector * Vector2(1f, 1f) }
-
-                    it("returns same values") {
-                        assert.that(result, equalTo(vector))
-                    }
-
-                    it("does not modify original") {
-                        assert.that(vector, equalTo(Vector2(2f, 3f)))
-                    }
-                }
-
-                context("when given non-identity") {
-                    lateinit var result: Vector2
-                    beforeEachTest { result = vector * Vector2(4f, 5f) }
-
-                    it("returns added values") {
-                        assert.that(result, equalTo(Vector2(8f, 15f)))
-                    }
-
-                    it("does not modify original") {
-                        assert.that(vector, equalTo(Vector2(2f, 3f)))
-                    }
-                }
-            }
-        }
-
-        describe(".div") {
-            context("Number") {
-                context("when given identity") {
-                    lateinit var result: Vector2
-                    beforeEachTest { result = vector / 1f }
-
-                    it("returns same values") {
-                        assert.that(result, equalTo(vector))
-                    }
-
-                    it("does not modify original") {
-                        assert.that(vector, equalTo(Vector2(2f, 3f)))
-                    }
-                }
-
-                context("when given non-identity") {
-                    lateinit var result: Vector2
-                    beforeEachTest { result = vector / 5f }
-
-                    it("returns added values") {
-                        assert.that(result, equalTo(Vector2(0.4f, 0.6f)))
-                    }
-
-                    it("does not modify original") {
-                        assert.that(vector, equalTo(Vector2(2f, 3f)))
-                    }
-                }
-            }
-
-            context("Vector") {
-                context("when given identity") {
-                    lateinit var result: Vector2
-                    beforeEachTest { result = vector / Vector2(1f, 1f) }
-
-                    it("returns same values") {
-                        assert.that(result, equalTo(vector))
-                    }
-
-                    it("does not modify original") {
-                        assert.that(vector, equalTo(Vector2(2f, 3f)))
-                    }
-                }
-
-                context("when given non-identity") {
-                    lateinit var result: Vector2
-                    beforeEachTest { result = vector / Vector2(4f, 5f) }
-
-                    it("returns added values") {
-                        assert.that(result, equalTo(Vector2(0.5f, 0.6f)))
-                    }
-
-                    it("does not modify original") {
-                        assert.that(vector, equalTo(Vector2(2f, 3f)))
-                    }
-                }
-            }
-        }
-
-        describe(".plusAssign") {
-            context("when given identity") {
-                val addend = Vector2(0f, 0f)
-                beforeEachTest { vector += addend }
-
-                it("stores correct result") {
-                    assert.that(vector, equalTo(Vector2(2f, 3f)))
-                }
-
-                it("does not modify original") {
-                    assert.that(addend, equalTo(Vector2(0f, 0f)))
-                }
-            }
-
-            context("when given non-identity") {
-                val addend = Vector2(4f, 5f)
-                beforeEachTest { vector += addend }
-
-                it("stores correct result") {
-                    assert.that(vector, equalTo(Vector2(6f, 8f)))
-                }
-
-                it("does not modify addend") {
-                    assert.that(addend, equalTo(Vector2(4f, 5f)))
-                }
-            }
-        }
-
-        describe(".minusAssign") {
-            context("when given identity") {
-                val subtrahend = Vector2(0f, 0f)
-                beforeEachTest { vector -= subtrahend }
-
-                it("stores correct result") {
-                    assert.that(vector, equalTo(Vector2(2f, 3f)))
-                }
-
-                it("does not modify subtrahend") {
-                    assert.that(subtrahend, equalTo(Vector2(0f, 0f)))
-                }
-            }
-
-            context("when given non-identity") {
-                val subtrahend = Vector2(1f, 7f)
-                beforeEachTest { vector -= subtrahend }
-
-                it("stores correct result") {
-                    assert.that(vector, equalTo(Vector2(1f, -4f)))
-                }
-
-                it("does not modify subtrahend") {
-                    assert.that(subtrahend, equalTo(Vector2(1f, 7f)))
-                }
-            }
-        }
-
-        describe(".timesAssign") {
-            context("when given identity") {
-                val multiplicand = Vector2(1f, 1f)
-                beforeEachTest { vector *= multiplicand }
-
-                it("stores correct result") {
-                    assert.that(vector, equalTo(Vector2(2f, 3f)))
-                }
-
-                it("does not modify multiplicand") {
-                    assert.that(multiplicand, equalTo(Vector2(1f, 1f)))
-                }
-            }
-
-            context("when given non-identity") {
-                val multiplicand = Vector2(4f, 5f)
-                beforeEachTest { vector *= multiplicand }
-
-                it("stores correct result") {
-                    assert.that(vector, equalTo(Vector2(8f, 15f)))
-                }
-
-                it("does not modify multiplicand") {
-                    assert.that(multiplicand, equalTo(Vector2(4f, 5f)))
-                }
-            }
-        }
-
-        describe(".divAssign") {
-            context("when given identity") {
-                val divisor = Vector2(1f, 1f)
-                beforeEachTest { vector /= divisor }
-
-                it("stores correct result") {
-                    assert.that(vector, equalTo(Vector2(2f, 3f)))
-                }
-
-                it("does not modify divisor") {
-                    assert.that(divisor, equalTo(Vector2(1f, 1f)))
-                }
-            }
-
-            context("when given non-identity") {
-                val divisor = Vector2(4f, 5f)
-                beforeEachTest { vector /= divisor }
-
-                it("stores correct result") {
-                    assert.that(vector, equalTo(Vector2(0.5f, 0.6f)))
-                }
-
-                it("does not modify divisor") {
-                    assert.that(divisor, equalTo(Vector2(4f, 5f)))
-                }
-            }
-        }
-
+    describe("ImmutableVector2") {
         describe(".toGridPoint2") {
             it("rounds values correctly") {
-                assert.that(Vector2(2.2f, 2.8f).toGridPoint2(), equalTo(GridPoint2(2, 3)))
+                assert.that(ImmutableVector2(2.2f, 2.8f).toGridPoint2(), equalTo(GridPoint2(2, 3)))
             }
         }
 
         describe(".toCubeCoordinate") {
             it("rounds values correctly") {
-                assert.that(Vector2(2.2f, 2.8f).toCubeCoordinate(), equalTo(CubeCoordinate(2, 3, -5)))
+                assert.that(ImmutableVector2(2.2f, 2.8f).toCubeCoordinate(), equalTo(CubeCoordinate(2, 3, -5)))
             }
         }
 
         describe(".toVector3") {
             it("copies values correctly") {
-                assert.that(Vector2(2.2f, 2.8f).toVector3(), equalTo(Vector3(2.2f, 2.8f, 0f)))
+                assert.that(ImmutableVector2(2.2f, 2.8f).toVector3(), equalTo(Vector3(2.2f, 2.8f, 0f)))
             }
         }
     }
