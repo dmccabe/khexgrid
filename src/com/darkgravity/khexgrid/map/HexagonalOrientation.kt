@@ -45,7 +45,7 @@ sealed class HexagonalOrientation(
         backward = Matrix2(2.0f / 3.0f, 0.0f, -1.0f / 3.0f, sqrt(3f) / 3.0f),
         startAngle = 0.0f,
         sizeMultiplier = ImmutableVector2(2f, sqrt(3f)),
-        packedMultiplier = ImmutableVector2(1f, 3f / 4f)
+        packedMultiplier = ImmutableVector2(3f / 4f, 1f)
     ) {
         override val id = "flat-top"
         val DIRECTION_NE = CubeCoordinate.DIRECTIONS[0]
