@@ -1,1 +1,1 @@
-rootProject.name = "khexgrid"
+include("khexgrid")
