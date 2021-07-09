@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.math.Rectangle
 import com.darkgravity.khexgrid.map.HexagonalMap
 import com.darkgravity.khexgrid.map.HexagonalTile
-import com.darkgravity.khexgrid.math.minus
 import com.darkgravity.khexgrid.math.toVector2
 import ktx.math.div
 import ktx.math.toMutable
@@ -13,7 +12,11 @@ import ktx.math.toMutable
 /**
  * @author Dan McCabe
  */
-class LayeredRenderer(private val map: HexagonalMap, private val layers: List<Layer>, private val camera: OrthographicCamera) {
+class LayeredRenderer(
+    private val map: HexagonalMap,
+    private val layers: List<Layer>,
+    private val camera: OrthographicCamera
+) {
 
     private var culledTiles: Collection<HexagonalTile> = cullTiles(map.tiles.values, camera.viewArea)
 

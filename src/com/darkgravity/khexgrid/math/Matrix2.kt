@@ -19,7 +19,10 @@ class Matrix2(m00: Float, m10: Float, m01: Float, m11: Float) {
     operator fun get(position: Int): Float = values[position]
 
     fun multiply(vector: ImmutableVector2): ImmutableVector2 =
-        ImmutableVector2(values[M00] * vector.x + values[M10] * vector.y, values[M01] * vector.x + values[M11] * vector.y)
+        ImmutableVector2(
+            values[M00] * vector.x + values[M10] * vector.y,
+            values[M01] * vector.x + values[M11] * vector.y
+        )
 
     operator fun times(vector: ImmutableVector2): ImmutableVector2 = multiply(vector)
 

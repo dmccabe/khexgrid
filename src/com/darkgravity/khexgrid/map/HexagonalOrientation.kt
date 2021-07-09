@@ -64,7 +64,7 @@ sealed class HexagonalOrientation(
     }
 
     companion object {
-        fun fromId(id: String) =
+        fun fromId(id: String): HexagonalOrientation =
             when (id) {
                 PointyTop.id -> PointyTop
                 FlatTop.id -> FlatTop

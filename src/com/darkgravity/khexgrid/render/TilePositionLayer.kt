@@ -3,10 +3,9 @@ package com.darkgravity.khexgrid.render
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
-import com.badlogic.gdx.math.Vector2
-import com.darkgravity.khexgrid.math.CubeCoordinate
 import com.darkgravity.khexgrid.map.HexagonalMap
 import com.darkgravity.khexgrid.map.HexagonalTile
+import com.darkgravity.khexgrid.math.CubeCoordinate
 import com.darkgravity.khexgrid.math.OffsetCoordinateType
 import ktx.math.ImmutableVector2
 
@@ -33,5 +32,6 @@ class TilePositionLayer(private val map: HexagonalMap, private val font: BitmapF
         return "${offsetCoordinate.x},${offsetCoordinate.y}"
     }
 
-    private fun calculateTextLayout(coordinate: CubeCoordinate): GlyphLayout = GlyphLayout(font, coordinateText(coordinate))
+    private fun calculateTextLayout(coordinate: CubeCoordinate): GlyphLayout =
+        GlyphLayout(font, coordinateText(coordinate))
 }

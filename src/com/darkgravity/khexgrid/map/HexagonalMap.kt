@@ -12,8 +12,10 @@ import ktx.math.ImmutableVector2
 /**
  * @author Dan McCabe
  */
-class HexagonalMap(val layout: HexagonalLayout, tiles: Map<CubeCoordinate, HexagonalTile>) :
-    Observable<HexagonalMapListener> by ObservableSubject() {
+class HexagonalMap(
+    val layout: HexagonalLayout,
+    tiles: Map<CubeCoordinate, HexagonalTile>
+) : Observable<HexagonalMapListener> by ObservableSubject() {
 
     private val mutableTiles = tiles.toMutableMap()
     val tiles: Map<CubeCoordinate, HexagonalTile> = mutableTiles
@@ -41,13 +43,23 @@ class HexagonalMap(val layout: HexagonalLayout, tiles: Map<CubeCoordinate, Hexag
     val worldAspectRatio get() = worldWidth / worldHeight
     val worldSize get() = ImmutableVector2(worldWidth, worldHeight)
 
-    val rows: List<List<CubeCoordinate>> get() = getOffsetLocations().groupBy { it.y }.map { it.value.map { it.toCubeCoordinate() } }
-    val columns: List<List<CubeCoordinate>> get() = getOffsetLocations().groupBy { it.x }.map { it.value.map { it.toCubeCoordinate() } }
+    val rows: List<List<CubeCoordinate>>
+        get() = getOffsetLocations().groupBy { it.y }.map { it.value.map { it.toCubeCoordinate() } }
+    val columns: List<List<CubeCoordinate>>
+        get() = getOffsetLocations().groupBy { it.x }.map { it.value.map { it.toCubeCoordinate() } }
 
-    val leftEdge: List<CubeCoordinate> get() = rows.map { locations -> checkNotNull(locations.minByOrNull { it.x }) }
-    val bottomEdge: List<CubeCoordinate> get() = columns.map { locations -> checkNotNull(locations.minByOrNull { it.y }) }
-    val rightEdge: List<CubeCoordinate> get() = rows.map { locations -> checkNotNull(locations.maxByOrNull { it.x }) }
-    val topEdge: List<CubeCoordinate> get() = columns.map { locations -> checkNotNull(locations.maxByOrNull { it.y }) }
+    val leftEdge: List<CubeCoordinate> get() = rows.map { locations ->
+        checkNotNull(locations.minByOrNull { it.x })
+    }
+    val bottomEdge: List<CubeCoordinate> get() = columns.map { locations ->
+        checkNotNull(locations.minByOrNull { it.y })
+    }
+    val rightEdge: List<CubeCoordinate> get() = rows.map { locations ->
+        checkNotNull(locations.maxByOrNull { it.x })
+    }
+    val topEdge: List<CubeCoordinate> get() = columns.map { locations ->
+        checkNotNull(locations.maxByOrNull { it.y })
+    }
 
     private val movableCache = CacheRegistry()
     val movableTiles: Map<CubeCoordinate, HexagonalTile> by cache(movableCache) { calculateMovableTiles() }
@@ -66,7 +78,7 @@ class HexagonalMap(val layout: HexagonalLayout, tiles: Map<CubeCoordinate, Hexag
         notify { it.tilesChanged(this, locations) }
     }
 
-    operator fun get(coordinate: CubeCoordinate) : Terrain? = tiles[coordinate]?.terrain
+    operator fun get(coordinate: CubeCoordinate): Terrain? = tiles[coordinate]?.terrain
 
     operator fun set(coordinate: CubeCoordinate, terrain: Terrain) {
         mutableTiles[coordinate] = HexagonalTile(coordinate, terrain)
@@ -113,10 +125,12 @@ class HexagonalMap(val layout: HexagonalLayout, tiles: Map<CubeCoordinate, Hexag
         val reachable = mutableMapOf(source to 0)
         var fringe = listOf(source)
         while (fringe.isNotEmpty()) {
-            fringe = fringe.flatMap{ tile ->
+            fringe = fringe.flatMap { tile ->
                 val validLocations = tile.location.neighbors().mapNotNull { tiles[it] }.filter { !it.isMoveObstacle }
                 val locationCosts = validLocations.associate { it to (reachable[tile] ?: 0) + it.movementCost }
-                val validCosts = locationCosts.filter { (it.key !in reachable || it.value < reachable[it.key]!!) && it.value <= range }
+                val validCosts = locationCosts.filter {
+                    (it.key !in reachable || it.value < reachable[it.key]!!) && it.value <= range
+                }
                 reachable += validCosts
                 validCosts.keys
             }
@@ -130,7 +144,8 @@ class HexagonalMap(val layout: HexagonalLayout, tiles: Map<CubeCoordinate, Hexag
     fun getVisibleTiles(source: HexagonalTile, range: Int): List<HexagonalTile> {
         val visible = source.location.withinRange(range) + listOf(source.location)
         return visible.mapNotNull { tiles[it] }.filter { tile ->
-            tile.location.lineToMidpoints(source.location).asSequence().mapNotNull { tiles[it] }.none { it.isViewObstacle }
+            tile.location.lineToMidpoints(source.location).asSequence().mapNotNull { tiles[it] }
+                .none { it.isViewObstacle }
         }
     }
 

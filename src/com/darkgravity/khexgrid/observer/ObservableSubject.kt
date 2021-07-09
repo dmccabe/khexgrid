@@ -14,5 +14,7 @@ class ObservableSubject<T> : Observable<T> {
         listeners -= listener
     }
 
-    override fun notify(block: (T) -> Unit) = listeners.forEach(block)
+    override fun notify(block: (T) -> Unit) {
+        listeners.forEach(block)
+    }
 }

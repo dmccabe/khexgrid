@@ -13,5 +13,7 @@ abstract class ShapeRendererLayer(val shapeRenderer: ShapeRenderer) : LayerAdapt
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled)
     }
 
-    override fun postRender(batch: PolygonSpriteBatch) = shapeRenderer.end()
+    override fun postRender(batch: PolygonSpriteBatch) {
+        shapeRenderer.end()
+    }
 }

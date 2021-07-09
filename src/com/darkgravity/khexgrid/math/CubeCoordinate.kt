@@ -1,6 +1,5 @@
 package com.darkgravity.khexgrid.math
 
-import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.math.Vector3
 import com.darkgravity.khexgrid.map.HexagonalOrientation.FlatTop
 import com.darkgravity.khexgrid.map.HexagonalOrientation.PointyTop
@@ -29,9 +28,11 @@ data class CubeCoordinate(val x: Int = 0, val y: Int = 0, val z: Int = -x - y) {
 
     operator fun times(scalar: Int): CubeCoordinate = multiply(scalar)
 
-    fun add(coordinate: CubeCoordinate): CubeCoordinate = CubeCoordinate(x + coordinate.x, y + coordinate.y, z + coordinate.z)
+    fun add(coordinate: CubeCoordinate): CubeCoordinate =
+        CubeCoordinate(x + coordinate.x, y + coordinate.y, z + coordinate.z)
 
-    fun subtract(coordinate: CubeCoordinate): CubeCoordinate = CubeCoordinate(x - coordinate.x, y - coordinate.y, z - coordinate.z)
+    fun subtract(coordinate: CubeCoordinate): CubeCoordinate =
+        CubeCoordinate(x - coordinate.x, y - coordinate.y, z - coordinate.z)
 
     fun multiply(scalar: Int): CubeCoordinate = CubeCoordinate(x * scalar, y * scalar, z * scalar)
 
@@ -81,9 +82,9 @@ data class CubeCoordinate(val x: Int = 0, val y: Int = 0, val z: Int = -x - y) {
         if (radius == 0) return listOf(this)
 
         // the directions constants are ordered such that for any direction, in order to move around in a ring, you need
-        // to move in the direction four places before that to go in the correct direction. for example, in terms of pointy
-        // top, index 4 represents the West direction, so to start a ring there, you need to go Northeast, which is located
-        // at index 0.
+        // to move in the direction four places before that to go in the correct direction. for example, in terms of
+        // pointy top, index 4 represents the West direction, so to start a ring there, you need to go Northeast, which
+        // is located at index 0.
         var firstSearchDirection = (startDirection - 4) % 6
         if (firstSearchDirection < 0) firstSearchDirection += 6
 
@@ -94,7 +95,8 @@ data class CubeCoordinate(val x: Int = 0, val y: Int = 0, val z: Int = -x - y) {
         }
     }
 
-    fun spiralRing(radius: Int, startDirection: Int = 4) = listOf(this) + (1 until radius).flatMap { ring(radius, startDirection) }
+    fun spiralRing(radius: Int, startDirection: Int = 4): List<CubeCoordinate> =
+        listOf(this) + (1 until radius).flatMap { ring(radius, startDirection) }
 
     fun toOffsetCoordinate(offsetType: OffsetCoordinateType): OffsetCoordinate =
         OffsetCoordinate(
@@ -110,10 +112,14 @@ data class CubeCoordinate(val x: Int = 0, val y: Int = 0, val z: Int = -x - y) {
     fun toVector3(): Vector3 = Vector3(x.toFloat(), y.toFloat(), z.toFloat())
 
     companion object {
-        var DIRECTIONS = listOf(CubeCoordinate(1, 0, -1), CubeCoordinate(1, -1, 0), CubeCoordinate(0, -1, 1),
-            CubeCoordinate(-1, 0, 1), CubeCoordinate(-1, 1, 0), CubeCoordinate(0, 1, -1))
+        var DIRECTIONS = listOf(
+            CubeCoordinate(1, 0, -1), CubeCoordinate(1, -1, 0), CubeCoordinate(0, -1, 1),
+            CubeCoordinate(-1, 0, 1), CubeCoordinate(-1, 1, 0), CubeCoordinate(0, 1, -1)
+        )
 
-        var DIAGONALS = listOf(CubeCoordinate(2, -1, -1), CubeCoordinate(1, -2, 1), CubeCoordinate(-1, -1, 2),
-            CubeCoordinate(-2, 1, 1), CubeCoordinate(-1, 2, -1), CubeCoordinate(1, 1, -2))
+        var DIAGONALS = listOf(
+            CubeCoordinate(2, -1, -1), CubeCoordinate(1, -2, 1), CubeCoordinate(-1, -1, 2),
+            CubeCoordinate(-2, 1, 1), CubeCoordinate(-1, 2, -1), CubeCoordinate(1, 1, -2)
+        )
     }
 }

@@ -28,19 +28,21 @@ class HexagonalRenderer(map: HexagonalMap, private val hexagonSpriteSize: Immuta
 
     fun getVertexEntry(location: CubeCoordinate): HexagonalVertexCache.CachedEntry = cache[location]
 
-    fun renderTexture(batch: PolygonSpriteBatch, texture: Texture, location: CubeCoordinate) =
+    fun renderTexture(batch: PolygonSpriteBatch, texture: Texture, location: CubeCoordinate) {
         renderTexture(batch, TextureRegion(texture), location)
+    }
 
-    fun renderTexture(batch: PolygonSpriteBatch, textureRegion: TextureRegion, location: CubeCoordinate) =
+    fun renderTexture(batch: PolygonSpriteBatch, textureRegion: TextureRegion, location: CubeCoordinate) {
         // draw colored tiles using the polygon vertices so they have the right shape
         if (textureRegion.regionWidth == 1 || textureRegion.regionHeight == 1) {
             renderPolygonTexture(batch, textureRegion, location)
-        // draw sprite tiles as a normal sprite since they already have the right shape
+            // draw sprite tiles as a normal sprite since they already have the right shape
         } else {
             renderSpriteTexture(batch, textureRegion, location)
         }
+    }
 
-    fun renderPolygonTexture(batch: PolygonSpriteBatch, textureRegion: TextureRegion, location: CubeCoordinate) =
+    fun renderPolygonTexture(batch: PolygonSpriteBatch, textureRegion: TextureRegion, location: CubeCoordinate) {
         // the PolygonRegion is used to cut a polygonal shape out of a texture region, which means the draw vertices
         // need to be at the origin to work correctly
         with(PolygonSprite(PolygonRegion(textureRegion, drawVertices, TRIANGLE_DRAW_ORDER))) {
@@ -48,8 +50,9 @@ class HexagonalRenderer(map: HexagonalMap, private val hexagonSpriteSize: Immuta
             setPosition(entry.minX, entry.minY)
             draw(batch)
         }
+    }
 
-    fun renderSpriteTexture(batch: PolygonSpriteBatch, textureRegion: TextureRegion, location: CubeCoordinate) =
+    fun renderSpriteTexture(batch: PolygonSpriteBatch, textureRegion: TextureRegion, location: CubeCoordinate) {
         with(Sprite(textureRegion)) {
             val entry = cache[location]
             val scale = kotlin.math.max(entry.width / hexagonSpriteSize.x, entry.height / hexagonSpriteSize.y)
@@ -57,6 +60,7 @@ class HexagonalRenderer(map: HexagonalMap, private val hexagonSpriteSize: Immuta
             setScale(scale)
             draw(batch)
         }
+    }
 
     fun renderOutline(renderer: ShapeRenderer, location: CubeCoordinate, thickness: Float = 1f) {
         val vertices = cache[location].vertices

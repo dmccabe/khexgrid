@@ -9,12 +9,18 @@ import com.darkgravity.khexgrid.map.TerrainView
 /**
  * @author Dan McCabe
  */
-class TerrainLayer(private val map: HexagonalMap,
-                   private val hexagonalRenderer: HexagonalRenderer,
-                   private val terrainViews: Map<Terrain, TerrainView>) : LayerAdapter() {
-    override fun handleRender(batch: PolygonSpriteBatch, tiles: Collection<HexagonalTile>) =
-        tiles.forEach {
-            val texture = terrainViews[map.getTerrain(it.location)]?.texture ?: return@forEach
-            hexagonalRenderer.renderTexture(batch, texture, it.location)
-        }
+class TerrainLayer(
+    private val map: HexagonalMap,
+    private val hexagonalRenderer: HexagonalRenderer,
+    private val terrainViews: Map<Terrain, TerrainView>
+) : LayerAdapter() {
+    override fun handleRender(batch: PolygonSpriteBatch, tiles: Collection<HexagonalTile>) {
+        tiles
+            .mapNotNull { tile ->
+                terrainViews[map.getTerrain(tile.location)]?.texture?.let { tile.location to it }
+            }
+            .forEach { (coordinate, texture) ->
+                hexagonalRenderer.renderTexture(batch, texture, coordinate)
+            }
+    }
 }

@@ -18,21 +18,29 @@ fun GridPoint2.toVector2(): ImmutableVector2 = ImmutableVector2(x.toFloat(), y.t
 
 fun GridPoint3.toCubeCoordinate(): CubeCoordinate = CubeCoordinate(x, y, z)
 
-operator fun ImmutableVector2.div(vector: ImmutableVector2): ImmutableVector2 = this * ImmutableVector2(1f / vector.x, 1f / vector.y)
-operator fun ImmutableVector2.div(number: Number): ImmutableVector2 = this * ImmutableVector2(1f / number.toFloat(), 1f / number.toFloat())
+operator fun ImmutableVector2.div(vector: ImmutableVector2): ImmutableVector2 =
+    this * ImmutableVector2(1f / vector.x, 1f / vector.y)
+
+operator fun ImmutableVector2.div(number: Number): ImmutableVector2 =
+    this * ImmutableVector2(1f / number.toFloat(), 1f / number.toFloat())
 
 fun ImmutableVector2.toGridPoint2(): GridPoint2 = GridPoint2(x.roundToInt(), y.roundToInt())
 fun ImmutableVector2.toCubeCoordinate(): CubeCoordinate = CubeCoordinate(x.roundToInt(), y.roundToInt())
 fun ImmutableVector2.toVector3(): Vector3 = Vector3(x, y, 0f)
 
 operator fun Vector3.plus(vector: Vector3): Vector3 = cpy().add(vector)
-operator fun Vector3.plus(gridPoint: GridPoint3): Vector3 = cpy().add(gridPoint.x.toFloat(), gridPoint.y.toFloat(), gridPoint.z.toFloat())
+operator fun Vector3.plus(gridPoint: GridPoint3): Vector3 =
+    cpy().add(gridPoint.x.toFloat(), gridPoint.y.toFloat(), gridPoint.z.toFloat())
+
 operator fun Vector3.minus(vector: Vector3): Vector3 = cpy().sub(vector)
-operator fun Vector3.minus(gridPoint: GridPoint3): Vector3 = cpy().sub(gridPoint.x.toFloat(), gridPoint.y.toFloat(), gridPoint.z.toFloat())
+operator fun Vector3.minus(gridPoint: GridPoint3): Vector3 =
+    cpy().sub(gridPoint.x.toFloat(), gridPoint.y.toFloat(), gridPoint.z.toFloat())
+
 operator fun Vector3.times(vector: Vector3): Vector3 = cpy().scl(vector)
 operator fun Vector3.times(number: Number): Vector3 = cpy().scl(number.toFloat(), number.toFloat(), number.toFloat())
 operator fun Vector3.div(vector: Vector3): Vector3 = cpy().scl(1f / vector.x, 1f / vector.y, 1f / vector.z)
-operator fun Vector3.div(number: Number): Vector3 = cpy().scl(1f / number.toFloat(), 1f / number.toFloat(), 1f / number.toFloat())
+operator fun Vector3.div(number: Number): Vector3 =
+    cpy().scl(1f / number.toFloat(), 1f / number.toFloat(), 1f / number.toFloat())
 
 operator fun Vector3.plusAssign(vector: Vector3) {
     add(vector)
