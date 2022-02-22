@@ -21,12 +21,12 @@ class HexagonalMap(
     val tiles: Map<CubeCoordinate, HexagonalTile> = mutableTiles
     val locations: List<CubeCoordinate> get() = tiles.keys.toList()
 
-    val orientation get() = layout.orientation
-    val position get() = layout.position
+    val orientation: HexagonalOrientation get() = layout.orientation
+    val position: ImmutableVector2 get() = layout.position
 
-    val tileCount get() = tiles.size
-    val tileSize get() = layout.tileSize
-    val packedTileSize get() = layout.packedTileSize
+    val tileCount: Int get() = tiles.size
+    val tileSize: ImmutableVector2 get() = layout.tileSize
+    val packedTileSize: ImmutableVector2 get() = layout.packedTileSize
 
     val minOffsetX: Int by lazy { getOffsetLocations().minByOrNull { it.x }?.x ?: 0 }
     val minOfsetY: Int by lazy { getOffsetLocations().minByOrNull { it.y }?.y ?: 0 }
@@ -38,10 +38,10 @@ class HexagonalMap(
     val aspectRatio: Float get() = width.toFloat() / height.toFloat()
     val size: GridPoint2 get() = GridPoint2(width, height)
 
-    val worldWidth get() = width * packedTileSize.x
-    val worldHeight get() = height * packedTileSize.y
-    val worldAspectRatio get() = worldWidth / worldHeight
-    val worldSize get() = ImmutableVector2(worldWidth, worldHeight)
+    val worldWidth: Float get() = width * packedTileSize.x
+    val worldHeight: Float get() = height * packedTileSize.y
+    val worldAspectRatio: Float get() = worldWidth / worldHeight
+    val worldSize: ImmutableVector2 get() = ImmutableVector2(worldWidth, worldHeight)
 
     val rows: List<List<CubeCoordinate>>
         get() = getOffsetLocations().groupBy { it.y }.map { it.value.map { it.toCubeCoordinate() } }

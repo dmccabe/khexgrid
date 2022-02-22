@@ -2,6 +2,7 @@ package com.darkgravity.khexgrid.map
 
 import com.darkgravity.khexgrid.math.CubeCoordinate
 import com.darkgravity.khexgrid.math.Matrix2
+import com.darkgravity.khexgrid.math.OffsetCoordinateType
 import ktx.math.ImmutableVector2
 import kotlin.math.sqrt
 
@@ -16,6 +17,8 @@ sealed class HexagonalOrientation(
     val packedMultiplier: ImmutableVector2
 ) {
     abstract val id: String
+
+    fun toOffsetCoordinateType(isOdd: Boolean = true): OffsetCoordinateType = OffsetCoordinateType(this, isOdd)
 
     object PointyTop : HexagonalOrientation(
         forward = Matrix2(sqrt(3f), sqrt(3f) / 2.0f, 0.0f, 3.0f / 2.0f),
