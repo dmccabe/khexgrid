@@ -1,12 +1,12 @@
 plugins {
     base
     java
-    kotlin("jvm") version "1.4.10"
+    kotlin("jvm") version "1.6.10"
 
     `java-library`
 }
 
-val kotlinVersion = "1.4.10"
+val kotlinVersion = "1.6.10"
 val gdxVersion = "1.9.6"
 val ktxVersion = "1.9.9-b1"
 val spekVersion = "2.0.14"
