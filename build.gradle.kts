@@ -29,10 +29,11 @@ repositories {
 }
 
 dependencies {
-    implementation("com.badlogicgames.gdx:gdx:$gdxVersion")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
 
     implementation("io.github.libktx:ktx-math:$ktxVersion")
+
+    implementation("com.badlogicgames.gdx:gdx:$gdxVersion")
 
     testImplementation("com.natpryce:hamkrest:1.4.2.0")
     testImplementation("org.spekframework.spek2:spek-dsl-jvm:$spekVersion")
