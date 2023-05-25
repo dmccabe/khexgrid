@@ -1,15 +1,15 @@
 plugins {
     base
     java
-    kotlin("jvm") version "1.6.10"
+    kotlin("jvm") version "1.8.10"
 
     `java-library`
 }
 
-val kotlinVersion = "1.6.10"
+val kotlinVersion = "1.8.10"
 val gdxVersion = "1.9.6"
 val ktxVersion = "1.9.9-b1"
-val spekVersion = "2.0.14"
+val kotestVersion = "5.6.2"
 
 group = "com.darkgravity"
 version = "0.1-SNAPSHOT"
@@ -18,9 +18,7 @@ sourceSets["main"].java.srcDirs("src/")
 sourceSets["test"].java.srcDirs("test/")
 
 tasks.withType<Test> {
-    useJUnitPlatform {
-        includeEngines("spek2")
-    }
+    useJUnitPlatform()
 }
 
 repositories {
@@ -35,8 +33,9 @@ dependencies {
 
     implementation("com.badlogicgames.gdx:gdx:$gdxVersion")
 
+    testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
+    testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
+    testImplementation("io.kotest:kotest-property:$kotestVersion")
     testImplementation("com.natpryce:hamkrest:1.4.2.0")
-    testImplementation("org.spekframework.spek2:spek-dsl-jvm:$spekVersion")
-    testRuntimeOnly("org.spekframework.spek2:spek-runner-junit5:$spekVersion")
     testRuntimeOnly("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
 }

@@ -1,12 +1,11 @@
 package com.darkgravity.khexgrid.map
 
-import com.badlogic.gdx.math.Vector2
 import com.darkgravity.khexgrid.math.CubeCoordinate
 import com.darkgravity.khexgrid.math.OffsetCoordinate
 import com.darkgravity.khexgrid.math.OffsetCoordinateType
 import ktx.math.ImmutableVector2
 
-/**
+/**@author
  * @author Dan McCabe
  */
 object HexagonalMapSharedContext {

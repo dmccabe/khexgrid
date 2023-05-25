@@ -7,14 +7,13 @@ import com.badlogic.gdx.math.Vector3
 import com.natpryce.hamkrest.assertion.assert
 import com.natpryce.hamkrest.equalTo
 import com.natpryce.hamkrest.throws
+import io.kotest.core.spec.style.DescribeSpec
 import ktx.math.ImmutableVector2
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.specification.describe
 
 /**
  * @author Dan McCabe
  */
-object MathExtensionsSpec : Spek( {
+object MathExtensionsSpec : DescribeSpec({
     describe("GridPoint2") {
         val point = GridPoint2(2, 3)
 
@@ -79,12 +78,12 @@ object MathExtensionsSpec : Spek( {
 
     describe("Vector3") {
         val vector = Vector3()
-        beforeEachTest { vector.set(2f, 3f, 4f) }
+        beforeEach { vector.set(2f, 3f, 4f) }
 
         describe(".plus") {
-            context("when given identity") {
+            describe("when given identity") {
                 lateinit var result: Vector3
-                beforeEachTest { result = vector + Vector3(0f, 0f, 0f) }
+                beforeEach { result = vector + Vector3(0f, 0f, 0f) }
 
                 it("returns same values") {
                     assert.that(result, equalTo(vector))
@@ -95,9 +94,9 @@ object MathExtensionsSpec : Spek( {
                 }
             }
 
-            context("when given non-identity") {
+            describe("when given non-identity") {
                 lateinit var result: Vector3
-                beforeEachTest { result = vector + Vector3(4f, 5f, 6f) }
+                beforeEach { result = vector + Vector3(4f, 5f, 6f) }
 
                 it("returns added values") {
                     assert.that(result, equalTo(Vector3(6f, 8f, 10f)))
@@ -110,9 +109,9 @@ object MathExtensionsSpec : Spek( {
         }
 
         describe(".minus") {
-            context("when given identity") {
+            describe("when given identity") {
                 lateinit var result: Vector3
-                beforeEachTest { result = vector - Vector3(0f, 0f, 0f) }
+                beforeEach { result = vector - Vector3(0f, 0f, 0f) }
 
                 it("returns same values") {
                     assert.that(result, equalTo(vector))
@@ -123,9 +122,9 @@ object MathExtensionsSpec : Spek( {
                 }
             }
 
-            context("when given non-identity") {
+            describe("when given non-identity") {
                 lateinit var result: Vector3
-                beforeEachTest { result = vector - Vector3(1f, 7f, 10f) }
+                beforeEach { result = vector - Vector3(1f, 7f, 10f) }
 
                 it("returns added values") {
                     assert.that(result, equalTo(Vector3(1f, -4f, -6f)))
@@ -138,10 +137,10 @@ object MathExtensionsSpec : Spek( {
         }
 
         describe(".times") {
-            context("Number") {
-                context("when given identity") {
+            describe("Number") {
+                describe("when given identity") {
                     lateinit var result: Vector3
-                    beforeEachTest { result = vector * 1f }
+                    beforeEach { result = vector * 1f }
 
                     it("returns same values") {
                         assert.that(result, equalTo(vector))
@@ -152,9 +151,9 @@ object MathExtensionsSpec : Spek( {
                     }
                 }
 
-                context("when given non-identity") {
+                describe("when given non-identity") {
                     lateinit var result: Vector3
-                    beforeEachTest { result = vector * 5f }
+                    beforeEach { result = vector * 5f }
 
                     it("returns added values") {
                         assert.that(result, equalTo(Vector3(10f, 15f, 20f)))
@@ -166,10 +165,10 @@ object MathExtensionsSpec : Spek( {
                 }
             }
 
-            context("Vector") {
-                context("when given identity") {
+            describe("Vector") {
+                describe("when given identity") {
                     lateinit var result: Vector3
-                    beforeEachTest { result = vector * Vector3(1f, 1f, 1f) }
+                    beforeEach { result = vector * Vector3(1f, 1f, 1f) }
 
                     it("returns same values") {
                         assert.that(result, equalTo(vector))
@@ -180,9 +179,9 @@ object MathExtensionsSpec : Spek( {
                     }
                 }
 
-                context("when given non-identity") {
+                describe("when given non-identity") {
                     lateinit var result: Vector3
-                    beforeEachTest { result = vector * Vector3(4f, 5f, 6f) }
+                    beforeEach { result = vector * Vector3(4f, 5f, 6f) }
 
                     it("returns added values") {
                         assert.that(result, equalTo(Vector3(8f, 15f, 24f)))
@@ -196,10 +195,10 @@ object MathExtensionsSpec : Spek( {
         }
 
         describe(".div") {
-            context("Number") {
-                context("when given identity") {
+            describe("Number") {
+                describe("when given identity") {
                     lateinit var result: Vector3
-                    beforeEachTest { result = vector / 1f }
+                    beforeEach { result = vector / 1f }
 
                     it("returns same values") {
                         assert.that(result, equalTo(vector))
@@ -210,9 +209,9 @@ object MathExtensionsSpec : Spek( {
                     }
                 }
 
-                context("when given non-identity") {
+                describe("when given non-identity") {
                     lateinit var result: Vector3
-                    beforeEachTest { result = vector / 5f }
+                    beforeEach { result = vector / 5f }
 
                     it("returns added values") {
                         assert.that(result, equalTo(Vector3(0.4f, 0.6f, 0.8f)))
@@ -224,10 +223,10 @@ object MathExtensionsSpec : Spek( {
                 }
             }
 
-            context("Vector") {
-                context("when given identity") {
+            describe("Vector") {
+                describe("when given identity") {
                     lateinit var result: Vector3
-                    beforeEachTest { result = vector / Vector3(1f, 1f, 1f) }
+                    beforeEach { result = vector / Vector3(1f, 1f, 1f) }
 
                     it("returns same values") {
                         assert.that(result, equalTo(vector))
@@ -238,9 +237,9 @@ object MathExtensionsSpec : Spek( {
                     }
                 }
 
-                context("when given non-identity") {
+                describe("when given non-identity") {
                     lateinit var result: Vector3
-                    beforeEachTest { result = vector / Vector3(4f, 5f, 5f) }
+                    beforeEach { result = vector / Vector3(4f, 5f, 5f) }
 
                     it("returns added values") {
                         assert.that(result, equalTo(Vector3(0.5f, 0.6f, 0.8f)))
@@ -254,9 +253,9 @@ object MathExtensionsSpec : Spek( {
         }
 
         describe(".plusAssign") {
-            context("when given identity") {
+            describe("when given identity") {
                 val addend = Vector3(0f, 0f, 0f)
-                beforeEachTest { vector += addend }
+                beforeEach { vector += addend }
 
                 it("stores correct result") {
                     assert.that(vector, equalTo(Vector3(2f, 3f, 4f)))
@@ -267,9 +266,9 @@ object MathExtensionsSpec : Spek( {
                 }
             }
 
-            context("when given non-identity") {
+            describe("when given non-identity") {
                 val addend = Vector3(4f, 5f, 6f)
-                beforeEachTest { vector += addend }
+                beforeEach { vector += addend }
 
                 it("stores correct result") {
                     assert.that(vector, equalTo(Vector3(6f, 8f, 10f)))
@@ -282,9 +281,9 @@ object MathExtensionsSpec : Spek( {
         }
 
         describe(".minusAssign") {
-            context("when given identity") {
+            describe("when given identity") {
                 val subtrahend = Vector3(0f, 0f, 0f)
-                beforeEachTest { vector -= subtrahend }
+                beforeEach { vector -= subtrahend }
 
                 it("stores correct result") {
                     assert.that(vector, equalTo(Vector3(2f, 3f, 4f)))
@@ -295,9 +294,9 @@ object MathExtensionsSpec : Spek( {
                 }
             }
 
-            context("when given non-identity") {
+            describe("when given non-identity") {
                 val subtrahend = Vector3(1f, 7f, 10f)
-                beforeEachTest { vector -= subtrahend }
+                beforeEach { vector -= subtrahend }
 
                 it("stores correct result") {
                     assert.that(vector, equalTo(Vector3(1f, -4f, -6f)))
@@ -310,9 +309,9 @@ object MathExtensionsSpec : Spek( {
         }
 
         describe(".timesAssign") {
-            context("when given identity") {
+            describe("when given identity") {
                 val multiplicand = Vector3(1f, 1f, 1f)
-                beforeEachTest { vector *= multiplicand }
+                beforeEach { vector *= multiplicand }
 
                 it("stores correct result") {
                     assert.that(vector, equalTo(Vector3(2f, 3f, 4f)))
@@ -323,9 +322,9 @@ object MathExtensionsSpec : Spek( {
                 }
             }
 
-            context("when given non-identity") {
+            describe("when given non-identity") {
                 val multiplicand = Vector3(4f, 5f, 6f)
-                beforeEachTest { vector *= multiplicand }
+                beforeEach { vector *= multiplicand }
 
                 it("stores correct result") {
                     assert.that(vector, equalTo(Vector3(8f, 15f, 24f)))
@@ -338,9 +337,9 @@ object MathExtensionsSpec : Spek( {
         }
 
         describe(".divAssign") {
-            context("when given identity") {
+            describe("when given identity") {
                 val divisor = Vector3(1f, 1f, 1f)
-                beforeEachTest { vector /= divisor }
+                beforeEach { vector /= divisor }
 
                 it("stores correct result") {
                     assert.that(vector, equalTo(Vector3(2f, 3f, 4f)))
@@ -351,9 +350,9 @@ object MathExtensionsSpec : Spek( {
                 }
             }
 
-            context("when given non-identity") {
+            describe("when given non-identity") {
                 val divisor = Vector3(4f, 5f, 5f)
-                beforeEachTest { vector /= divisor }
+                beforeEach { vector /= divisor }
 
                 it("stores correct result") {
                     assert.that(vector, equalTo(Vector3(0.5f, 0.6f, 0.8f)))

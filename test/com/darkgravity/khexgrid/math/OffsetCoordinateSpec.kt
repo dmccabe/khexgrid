@@ -2,13 +2,12 @@ package com.darkgravity.khexgrid.math
 
 import com.natpryce.hamkrest.assertion.assert
 import com.natpryce.hamkrest.equalTo
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.specification.describe
+import io.kotest.core.spec.style.DescribeSpec
 
 /**
  * @author Dan McCabe
  */
-object OffsetCoordinateSpec : Spek( {
+object OffsetCoordinateSpec : DescribeSpec({
     describe("OffsetCoordinate") {
         describe(".toCubeCoordinate") {
             it("returns correct value for pointy-top odd") {

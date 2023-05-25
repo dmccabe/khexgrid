@@ -1,21 +1,19 @@
 package com.darkgravity.khexgrid.math
 
-import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.math.Vector3
 import com.natpryce.hamkrest.allElements
 import com.natpryce.hamkrest.assertion.assert
 import com.natpryce.hamkrest.equalTo
 import com.natpryce.hamkrest.isIn
 import com.natpryce.hamkrest.throws
+import io.kotest.core.spec.style.DescribeSpec
 import ktx.math.ImmutableVector2
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.specification.describe
 
 /**
  * @author Dan McCabe
  */
-object CubeCoordinateSpec : Spek( {
-    val subject by memoized { CubeCoordinate(2, 5, -7) }
+object CubeCoordinateSpec : DescribeSpec({
+    val subject = CubeCoordinate(2, 5, -7)
     val modifier = CubeCoordinate(3, 4, -7)
 
     describe("CubeCoordinate") {
@@ -127,9 +125,9 @@ object CubeCoordinateSpec : Spek( {
             it("returns itself for radius 0") {
                 assert.that(subject.ring(0), equalTo(listOf(subject)))
             }
-            context("radius 1 with default start direction") {
+            describe("radius 1 with default start direction") {
                 lateinit var result: List<CubeCoordinate>
-                beforeEachTest { result = subject.ring(1) }
+                beforeEach { result = subject.ring(1) }
 
                 it("returns all neighbors for radius 1") {
                     assert.that(result, allElements(isIn(subject.neighbors())))
@@ -139,9 +137,9 @@ object CubeCoordinateSpec : Spek( {
                     assert.that(result, equalTo(neighbors.subList(4, neighbors.size) + neighbors.subList(0, 4)))
                 }
             }
-            context("radius 1 with start direction of 2") {
+            describe("radius 1 with start direction of 2") {
                 lateinit var result: List<CubeCoordinate>
-                beforeEachTest { result = subject.ring(1, 2) }
+                beforeEach { result = subject.ring(1, 2) }
 
                 it("returns all neighbors for radius 1") {
                     assert.that(result, allElements(isIn(subject.neighbors())))
@@ -151,9 +149,9 @@ object CubeCoordinateSpec : Spek( {
                     assert.that(result, equalTo(neighbors.subList(2, neighbors.size) + neighbors.subList(0, 2)))
                 }
             }
-            context("radius 2 with default start direction") {
+            describe("radius 2 with default start direction") {
                 lateinit var result: List<CubeCoordinate>
-                beforeEachTest { result = subject.ring(2) }
+                beforeEach { result = subject.ring(2) }
 
                 it("returns ring in correct order") {
                     assert.that(result, equalTo(listOf(

@@ -2,18 +2,21 @@ package com.darkgravity.khexgrid.observer
 
 import com.natpryce.hamkrest.assertion.assert
 import com.natpryce.hamkrest.equalTo
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.specification.describe
+import io.kotest.core.spec.style.DescribeSpec
 
 /**
  * @author Dan McCabe
  */
-object ObservableSubjectSpec : Spek( {
-    val subject by memoized { ObservableSubject<TestListener>() }
-    fun notify() = subject.notify { it.eventFired() }
-
+object ObservableSubjectSpec : DescribeSpec({
+    lateinit var subject: ObservableSubject<TestListener>
     val listener = TestListener()
-    beforeEachTest { listener.reset() }
+
+    beforeEach {
+        subject = ObservableSubject()
+        listener.reset()
+    }
+
+    fun notify() = subject.notify { it.eventFired() }
 
     describe("ObservableSubject") {
         describe(".addListener") {

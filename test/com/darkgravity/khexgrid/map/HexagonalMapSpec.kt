@@ -4,14 +4,17 @@ import com.darkgravity.khexgrid.math.OffsetCoordinate
 import com.darkgravity.khexgrid.math.OffsetCoordinateType
 import com.natpryce.hamkrest.assertion.assert
 import com.natpryce.hamkrest.equalTo
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.specification.describe
+import io.kotest.core.spec.style.DescribeSpec
 
 /**
  * @author Dan McCabe
  */
-object HexagonalMapSpec : Spek({
-    val subject by memoized { HexagonalMapSharedContext.createMap(5, 5) }
+object HexagonalMapSpec : DescribeSpec({
+    lateinit var subject: HexagonalMap
+
+    beforeEach {
+        subject = HexagonalMapSharedContext.createMap(5, 5)
+    }
 
     describe("HexagonalMap") {
         describe(".getTerrain") {
