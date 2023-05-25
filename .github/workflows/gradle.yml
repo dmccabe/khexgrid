@@ -19,7 +19,7 @@ jobs:
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@v1
 
-      - name: Setup Gradle
+      - name: Run Gradle check
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: clean check
+          arguments: check
