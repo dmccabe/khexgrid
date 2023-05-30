@@ -71,7 +71,7 @@ class HexagonalMap(
 
     private fun calculateMovableTiles() = tiles.filterNot { it.value.isMoveObstacle }
 
-    private fun calculateMovableEdge(edge: List<CubeCoordinate>) = edge.intersect(movableLocations).toList()
+    private fun calculateMovableEdge(edge: List<CubeCoordinate>) = edge.intersect(movableLocations.toSet()).toList()
 
     private fun tilesChanged(locations: List<CubeCoordinate>) {
         movableCache.invalidate()
@@ -102,7 +102,7 @@ class HexagonalMap(
     }
 
     operator fun minusAssign(coordinates: List<CubeCoordinate>) {
-        mutableTiles -= coordinates
+        mutableTiles -= coordinates.toSet()
         tilesChanged(coordinates)
     }
 

@@ -22,7 +22,7 @@ object HexagonalMapSpec : DescribeSpec({
                 assert.that(
                     subject.getTerrain(
                         OffsetCoordinate(2, 2, OffsetCoordinateType(subject.orientation)).toCubeCoordinate()
-                    ), equalTo<Terrain>(TestTerrain.DESERT)
+                    ), equalTo(TestTerrain.DESERT)
                 )
             }
             it("returns null for an invalid location") {
