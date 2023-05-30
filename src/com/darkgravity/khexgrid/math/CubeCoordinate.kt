@@ -91,7 +91,7 @@ data class CubeCoordinate(val x: Int = 0, val y: Int = 0, val z: Int = -x - y) {
         var current = this + DIRECTIONS[startDirection] * radius
         val orderedDirections = (firstSearchDirection until 6).map { it } + (0 until firstSearchDirection).map { it }
         return orderedDirections.flatMap { i ->
-            (0 until radius).map { _ -> current.also { current = current.neighbor(i) } }
+            (0 until radius).map { current.also { current = current.neighbor(i) } }
         }
     }
 

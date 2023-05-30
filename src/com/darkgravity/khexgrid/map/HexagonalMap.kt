@@ -127,7 +127,7 @@ class HexagonalMap(
         while (fringe.isNotEmpty()) {
             fringe = fringe.flatMap { tile ->
                 val validLocations = tile.location.neighbors().mapNotNull { tiles[it] }.filter { !it.isMoveObstacle }
-                val locationCosts = validLocations.associate { it to (reachable[tile] ?: 0) + it.movementCost }
+                val locationCosts = validLocations.associateWith { (reachable[tile] ?: 0) + it.movementCost }
                 val validCosts = locationCosts.filter {
                     (it.key !in reachable || it.value < reachable[it.key]!!) && it.value <= range
                 }
