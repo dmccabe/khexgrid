@@ -13,7 +13,7 @@ val ktxVersion = "1.9.9-b1"
 val kotestVersion = "5.6.2"
 
 group = "com.darkgravity"
-version = "0.1-SNAPSHOT"
+version = "0.1.0"
 
 sourceSets["main"].java.srcDirs("src/")
 sourceSets["test"].java.srcDirs("test/")
