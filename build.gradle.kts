@@ -4,6 +4,7 @@ plugins {
     kotlin("jvm") version "1.8.10"
 
     `java-library`
+    `maven-publish`
 }
 
 val kotlinVersion = "1.8.10"
