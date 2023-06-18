@@ -27,6 +27,20 @@ repositories {
     mavenCentral()
 }
 
+publishing {
+    publications {
+        create<MavenPublication>("khexgrid") {
+            from(components["java"])
+        }
+    }
+
+    repositories {
+        maven {
+            url = uri("https://jitpack.io")
+        }
+    }
+}
+
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
 
