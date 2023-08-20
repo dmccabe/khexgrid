@@ -12,7 +12,7 @@ import ktx.math.toMutable
 /**
  * @author Dan McCabe
  */
-class LayeredRenderer(
+class LayeredHexagonalRenderer(
     private val map: HexagonalMap,
     private val layers: List<Layer>,
     private val camera: OrthographicCamera
