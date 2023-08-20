@@ -1,15 +1,15 @@
 plugins {
     base
     java
-    kotlin("jvm") version "1.8.10"
+    kotlin("jvm") version "1.8.20"
 
     `java-library`
     `maven-publish`
 }
 
-val kotlinVersion = "1.8.10"
-val gdxVersion = "1.9.6"
-val ktxVersion = "1.9.9-b1"
+val kotlinVersion = "1.8.20"
+val gdxVersion = "1.12.0"
+val ktxVersion = "1.12.0-rc1"
 val kotestVersion = "5.6.2"
 
 group = "com.darkgravity"
