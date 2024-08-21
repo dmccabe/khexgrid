@@ -1,13 +1,13 @@
 plugins {
     base
     java
-    kotlin("jvm") version "1.8.20"
+    kotlin("jvm") version "2.0.10"
 
     `java-library`
     `maven-publish`
 }
 
-val kotlinVersion = "1.8.20"
+val kotlinVersion = "2.0.10"
 val gdxVersion = "1.12.0"
 val ktxVersion = "1.12.0-rc1"
 val kotestVersion = "5.6.2"
