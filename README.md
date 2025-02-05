@@ -62,6 +62,8 @@ Draw map to screen
 Sample screen implementation using LibGDX
 
 ```kotlin
+package com.darkgravity.khexgrid.sample
+
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.*
@@ -138,6 +140,9 @@ class HexGridScreen(rowCount: Int, columnCount: Int) : Screen {
     }
 
     override fun dispose() {
+        batch.dispose()
+        shapeRenderer.dispose()
+        terrainViews.values.map { it.texture }.forEach { it.texture.dispose() }
     }
 
     private fun createColorPixmap(color: Color, width: Int, height: Int): Pixmap =
