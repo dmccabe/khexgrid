@@ -1,14 +1,42 @@
 # KHexGrid
+![](https://github.com/dmccabe/khexgrid/actions/workflows/gradle.yaml/badge.svg)
+[![](https://jitpack.io/v/dmccabe/khexgrid.svg)](https://jitpack.io/#dmccabe/khexgrid)
+
 Kotlin implementation of hexagonal grids using LibGDX.
 
 Allows for grids of any size and shape - square, rectangular, triangular, or even irregular. Supports both pointy-top and flat-top hexes.
 
 Based on Red Blob Games' [fantastic guide](https://www.redblobgames.com/grids/hexagons/) on hexagonal grids.
 
+## Setup Dependency
+Builds are hosted on JitPack, instructions on how to set up a dependency in your project using different build systems can be found [here](https://jitpack.io/#dmccabe/khexgrid).
+
+### Gradle
+
+Add to your root `build.gradle` at the end of the repositories:
+```groovy
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+
+Then add the dependency:
+```groovy
+dependencies {
+    implementation 'com.github.dmccabe:khexgrid:0.1.0'
+}
+```
+
 ## Overview
 Locations in the map are represented as `CubeCoordinate`s. A `CubeCoordinate` has many handy operations built-in, but knows nothing of the external map structure. These objects are immutable by design, but can readily be converted to several other types, such as `OffsetCoordinate`s or vectors.
 
-A `HexagonalMap` consists of a series of `CubeCoordinate`s mapped to `HexagonalTile`s at those locations. The corresponding `HexagonalLayout` and `HexagonalOrientation` can be used to control the position and appearance of the tiles. A `HexagonalTile` is composed of a location and a `Terrain`, which defines rules for tiles such as movement cost and visibility.
+A `HexagonalMap` consists of a series of `CubeCoordinate`s mapped to `HexagonalTile`s at those locations. A `HexagonalTile` is just a tuple composed of a location and a `Terrain`, which defines rules for tiles such as movement cost and visibility.
+
+`HexagonalLayout` and `HexagonalOrientation` are used along with a `HexagonalMap` to control the position and appearance of the tiles.
 
 A map can be drawn using a `LayeredRenderer`. The renderer will draw any `Layer`s provided. It will also handle culling the tiles that are drawn to the camera's viewable area to reduce unnecessary drawing. Some simple `Layer` implementations are also included.
 
