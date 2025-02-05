@@ -9,10 +9,10 @@ import com.darkgravity.khexgrid.map.TerrainView
 /**
  * @author Dan McCabe
  */
-class TerrainLayer(
+class TerrainLayer<T : Terrain>(
     private val map: HexagonalMap,
     private val hexagonalRenderer: HexagonalRenderer,
-    private val terrainViews: Map<Terrain, TerrainView>
+    private val terrainViews: Map<T, TerrainView>
 ) : LayerAdapter() {
     override fun handleRender(batch: PolygonSpriteBatch, tiles: Collection<HexagonalTile>) {
         tiles
