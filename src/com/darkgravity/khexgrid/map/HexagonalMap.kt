@@ -9,9 +9,6 @@ import com.darkgravity.khexgrid.observer.Observable
 import com.darkgravity.khexgrid.observer.ObservableSubject
 import ktx.math.ImmutableVector2
 
-/**
- * @author Dan McCabe
- */
 class HexagonalMap(
     val layout: HexagonalLayout,
     tiles: Map<CubeCoordinate, HexagonalTile>

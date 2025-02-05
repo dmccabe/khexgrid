@@ -10,9 +10,6 @@ import com.darkgravity.khexgrid.math.CubeCoordinate
 import com.darkgravity.khexgrid.math.ceilToInt
 import ktx.math.ImmutableVector2
 
-/**
- * @author Dan McCabe
- */
 class HexagonalRenderer(map: HexagonalMap, private val hexagonSpriteSize: ImmutableVector2) {
 
     private val drawVertices = map.polygonVertices(CubeCoordinate())

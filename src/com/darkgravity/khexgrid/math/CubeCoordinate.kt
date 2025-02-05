@@ -9,9 +9,6 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
 
-/**
- * @author Dan McCabe
- */
 data class CubeCoordinate(val x: Int = 0, val y: Int = 0, val z: Int = -x - y) {
 
     init {

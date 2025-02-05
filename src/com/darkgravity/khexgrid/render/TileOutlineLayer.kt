@@ -5,9 +5,6 @@ import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.darkgravity.khexgrid.map.HexagonalTile
 
-/**
- * @author Dan McCabe
- */
 class TileOutlineLayer(
     private val hexagonalRenderer: HexagonalRenderer,
     shapeRenderer: ShapeRenderer,

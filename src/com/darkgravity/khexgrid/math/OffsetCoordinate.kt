@@ -5,9 +5,6 @@ import com.darkgravity.khexgrid.map.HexagonalOrientation.FlatTop
 import com.darkgravity.khexgrid.map.HexagonalOrientation.PointyTop
 import ktx.math.ImmutableVector2
 
-/**
- * @author Dan McCabe
- */
 data class OffsetCoordinate(
     val x: Int = 0,
     val y: Int = 0,

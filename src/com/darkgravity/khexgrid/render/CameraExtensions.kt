@@ -8,9 +8,6 @@ import ktx.math.div
 import ktx.math.minus
 import ktx.math.times
 
-/**
- * @author Dan McCabe
- */
 val OrthographicCamera.viewArea: Rectangle get() {
     val zoomedViewportSize = Vector2(viewportWidth, viewportHeight) * zoom
     val position = position.toVector2() - zoomedViewportSize / 2f

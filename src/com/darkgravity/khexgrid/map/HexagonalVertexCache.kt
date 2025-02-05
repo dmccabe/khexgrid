@@ -2,9 +2,6 @@ package com.darkgravity.khexgrid.map
 
 import com.darkgravity.khexgrid.math.CubeCoordinate
 
-/**
- * @author Dan McCabe
- */
 class HexagonalVertexCache(private val map: HexagonalMap) {
     private val locationVertices =
         map.tiles.keys.associateWith { CachedEntry(map.polygonVertices(it)) }.toMutableMap()

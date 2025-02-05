@@ -10,9 +10,6 @@ import com.natpryce.hamkrest.throws
 import io.kotest.core.spec.style.DescribeSpec
 import ktx.math.ImmutableVector2
 
-/**
- * @author Dan McCabe
- */
 object MathExtensionsSpec : DescribeSpec({
     describe("GridPoint2") {
         val point = GridPoint2(2, 3)

@@ -6,9 +6,6 @@ import com.darkgravity.khexgrid.map.HexagonalTile
 import com.darkgravity.khexgrid.map.Terrain
 import com.darkgravity.khexgrid.map.TerrainView
 
-/**
- * @author Dan McCabe
- */
 class TerrainLayer<T : Terrain>(
     private val map: HexagonalMap,
     private val hexagonalRenderer: HexagonalRenderer,

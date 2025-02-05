@@ -5,9 +5,6 @@ import com.darkgravity.khexgrid.math.OffsetCoordinate
 import com.darkgravity.khexgrid.math.OffsetCoordinateType
 import ktx.math.ImmutableVector2
 
-/**@author
- * @author Dan McCabe
- */
 object HexagonalMapSharedContext {
     fun createMap(rows: Int, columns: Int, terrains: List<Terrain> = TestTerrain.values().toList()) : HexagonalMap {
         val orientation = HexagonalOrientation.PointyTop

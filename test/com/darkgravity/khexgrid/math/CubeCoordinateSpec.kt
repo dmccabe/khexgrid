@@ -9,9 +9,6 @@ import com.natpryce.hamkrest.throws
 import io.kotest.core.spec.style.DescribeSpec
 import ktx.math.ImmutableVector2
 
-/**
- * @author Dan McCabe
- */
 object CubeCoordinateSpec : DescribeSpec({
     val subject = CubeCoordinate(2, 5, -7)
     val modifier = CubeCoordinate(3, 4, -7)

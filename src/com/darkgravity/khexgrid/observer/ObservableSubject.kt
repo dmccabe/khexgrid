@@ -1,8 +1,5 @@
 package com.darkgravity.khexgrid.observer
 
-/**
- * @author Dan McCabe
- */
 class ObservableSubject<T> : Observable<T> {
     private val listeners = mutableSetOf<T>()
 

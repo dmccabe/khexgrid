@@ -4,9 +4,6 @@ import com.natpryce.hamkrest.assertion.assert
 import com.natpryce.hamkrest.equalTo
 import io.kotest.core.spec.style.DescribeSpec
 
-/**
- * @author Dan McCabe
- */
 object ObservableSubjectSpec : DescribeSpec({
     lateinit var subject: ObservableSubject<TestListener>
     val listener = TestListener()

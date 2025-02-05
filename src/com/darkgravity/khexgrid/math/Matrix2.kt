@@ -2,9 +2,6 @@ package com.darkgravity.khexgrid.math
 
 import ktx.math.ImmutableVector2
 
-/**
- * @author Dan McCabe
- */
 class Matrix2(m00: Float, m10: Float, m01: Float, m11: Float) {
 
     private val values = FloatArray(4)

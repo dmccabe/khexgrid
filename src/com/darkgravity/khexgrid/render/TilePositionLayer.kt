@@ -9,9 +9,6 @@ import com.darkgravity.khexgrid.math.CubeCoordinate
 import com.darkgravity.khexgrid.math.OffsetCoordinateType
 import ktx.math.ImmutableVector2
 
-/**
- * @author Dan McCabe
- */
 class TilePositionLayer(private val map: HexagonalMap, private val font: BitmapFont) : LayerAdapter() {
 
     private val textPositions = map.tiles.keys.associateWith { coordinate ->

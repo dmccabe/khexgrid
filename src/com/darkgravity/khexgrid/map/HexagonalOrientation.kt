@@ -6,9 +6,6 @@ import com.darkgravity.khexgrid.math.OffsetCoordinateType
 import ktx.math.ImmutableVector2
 import kotlin.math.sqrt
 
-/**
- * @author Dan McCabe
- */
 sealed class HexagonalOrientation(
     val forward: Matrix2,
     val backward: Matrix2,

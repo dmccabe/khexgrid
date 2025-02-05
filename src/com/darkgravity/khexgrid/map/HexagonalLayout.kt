@@ -8,9 +8,6 @@ import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
-/**
- * @author Dan McCabe
- */
 class HexagonalLayout(
     val orientation: HexagonalOrientation,
     val position: ImmutableVector2,

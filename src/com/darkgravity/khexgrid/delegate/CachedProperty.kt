@@ -1,8 +1,5 @@
 package com.darkgravity.khexgrid.delegate
 
-/**
- * @author Dan McCabe
- */
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 

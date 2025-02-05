@@ -9,9 +9,6 @@ import com.darkgravity.khexgrid.math.toVector2
 import ktx.math.div
 import ktx.math.toMutable
 
-/**
- * @author Dan McCabe
- */
 class LayeredHexagonalRenderer(
     private val map: HexagonalMap,
     private val layers: List<Layer>,

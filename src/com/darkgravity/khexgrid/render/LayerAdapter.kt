@@ -3,9 +3,6 @@ package com.darkgravity.khexgrid.render
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.darkgravity.khexgrid.map.HexagonalTile
 
-/**
- * @author Dan McCabe
- */
 abstract class LayerAdapter : Layer {
     protected open fun preRender(batch: PolygonSpriteBatch) {}
     protected open fun postRender(batch: PolygonSpriteBatch) {}
