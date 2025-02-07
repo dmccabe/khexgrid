@@ -44,10 +44,12 @@ A map can be drawn using a `LayeredRenderer`. The renderer will draw any `Layer`
 ## Example Usage
 Create map
 ```kotlin
+    val coordinateType = OffsetCoordinateType(HexagonalOrientation.POINTY_TOP)
     val tiles = (0 until rows).flatMap { row ->
         (0 until columns).map { column ->
-            val coordinate = OffsetCoordinate(column, row, OffsetCoordinateType(HexagonalOrientation.POINTY_TOP)).toCubeCoordinate()
-            coordinate to HexagonalTile(coordinate, generateTerrain(column, row))
+            OffsetCoordinate(column, row, coordinateType)
+                .toCubeCoordinate()
+                .let { it to HexagonalTile(it, generateTerrain(column, row)) }
         }
     }.toMap()
     val map = HexagonalMap(layout, tiles)
@@ -78,10 +80,14 @@ Draw map to screen
 
 ```kotlin
     val hexRenderer = HexagonalRenderer(map, Vector2(32, 32))
-    val renderer = LayeredRenderer(map, listOf(
-        TerrainLayer(map, hexRenderer, terrainViews),
-        TileOutlineLayer(hexRenderer, shapeRenderer)
-    ), camera)
+    val renderer = LayeredRenderer(
+        map,
+        listOf(
+            TerrainLayer(map, hexRenderer, terrainViews),
+            TileOutlineLayer(hexRenderer, shapeRenderer)
+        ), 
+        camera
+    )
     renderer.render(batch)
 ```
 
